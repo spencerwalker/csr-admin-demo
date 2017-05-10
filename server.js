@@ -11,7 +11,7 @@ var express = require('express'),
     port = process.env.PORT || 4452,
     bodyParser = require('body-parser');
 
-app.use(favicon(__dirname + '/aveda-favicon.ico'));
+// app.use(favicon(__dirname + '/aveda-favicon.ico'));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

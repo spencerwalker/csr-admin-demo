@@ -3,6 +3,6 @@
   "scope": ["FullAccess"],
   "buyerid": "EnterpriseCosmetics",
   "catalogid": "EnterpriseCosmetics",
-  "environment": "production",
+  "environment": "local",
   "defaultstate": "base.dashboard"
 }

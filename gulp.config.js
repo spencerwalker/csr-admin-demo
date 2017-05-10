@@ -56,7 +56,7 @@ function getConstants() {
             result.apiurl = 'https://api.ordercloud.io';
             result.devapiurl = 'http://localhost:4452/api';
             // result.integrationurl = 'http://core.four51.com:9004';
-            // result.firebaseurl = 'https://aveda-test.firebaseio.com';
+            result.firebaseurl = 'https://aveda-test.firebaseio.com';
             result.clientid = '00EE4D96-8539-405C-884A-638A12004E26';
             result.buyerclientid = '3F798589-5901-4C89-855B-9A4B35CC5C21';
             break;
@@ -100,7 +100,7 @@ function getConstants() {
             result.devapiurl = 'https://enterprise-cosmetics-admin.herokuapp.com/api';
             // result.integrationurl = 'https://integrations.ordercloud.io';
             // result.jitterbitauth = 'Basic QXZlZGFBcHByb3ZlOjR2M2RhQXBwcjB2MyE=';
-            // result.firebaseurl = 'https://aveda.firebaseio.com';
+            result.firebaseurl = 'https://aveda.firebaseio.com';
             result.clientid = '00EE4D96-8539-405C-884A-638A12004E26';
             // result.bulkapproveurl = 'https://Four51TRIAL104401.jitterbit.net/Four51Prod/v1/bulkapproveorders';
             result.buyerclientid = '3F798589-5901-4C89-855B-9A4B35CC5C21';

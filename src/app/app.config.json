@@ -4,5 +4,5 @@
   "buyerid": "EnterpriseCosmetics",
   "catalogid": "EnterpriseCosmetics",
   "environment": "local",
-  "defaultstate": "base.dashboard"
+  "defaultstate": "base.adminProducts"
 }

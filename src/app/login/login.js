@@ -42,7 +42,7 @@ function LoginController($state, $stateParams, $exceptionHandler, toastr, OrderC
                     vm.token = data.access_token;
                     vm.form = 'resetByToken';
                 } else {
-                    $state.go('base.dashboard');
+                    $state.go('base.adminProducts');
                 }
 
             })

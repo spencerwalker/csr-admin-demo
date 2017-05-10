@@ -433,7 +433,7 @@ function AdminClaimsController($stateParams, AdminClaimsService, CategoryOptions
     var vm = this;
     vm.claimType = $stateParams.claimType;
     vm.categoryOptions = CategoryOptions;
-    vm.claimReasons = ClaimReasons;
+    vm.claimReasons = ClaimReasons || [];
 
     angular.forEach(vm.categoryOptions, function(category) {
         angular.forEach(category.SubCategories, function(subCat) {

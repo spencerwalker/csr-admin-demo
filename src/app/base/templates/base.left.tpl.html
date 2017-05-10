@@ -3,7 +3,7 @@
 	<a ui-sref-active="active" ui-sref="base.adminCategories"  ui-sref-opts="{reload: true}"><i class="fa fa-sitemap"></i> Categories</a>
 	<a ui-sref-active="active" ui-sref="base.adminProducts"  ui-sref-opts="{reload: true}"><i class="fa fa-cube"></i> Products</a>
 	<a ui-sref-active="active" ui-sref="base.adminPromotions"  ui-sref-opts="{reload: true}"><i class="fa fa-cubes"></i> Promotions</a>
-	<a ui-sref-active="active" ui-sref="base.adminLaunchControls"  ui-sref-opts="{reload: true}"><i class="fa fa-calendar"></i> Launch Controls</a>
+
 	<a ui-sref-active="active" ui-sref="base.adminNews" ui-sref-opts="{reload: true}"><i class="fa fa-newspaper-o"></i> Aveda News</a>
 	<a ui-sref-active="active" ui-sref="base.adminUpdates" ui-sref-opts="{reload: true}"><i class="fa fa-exclamation-circle"></i> Urgent Updates</a>
 	<a ui-sref-active="active" ui-sref="base.adminCostCenters" ui-sref-opts="{reload: true}"><i class="fa fa-cogs"></i> Cost Centers</a>
@@ -22,9 +22,9 @@
 		</nav>
 	</div>
 	<!--<a ui-sref-active="active" ui-sref="base.adminSalons" ui-sref-opts="{reload: true}"><i class="fa fa-cogs"></i> Salons</a>-->
-	<a ui-sref-active="active" ui-sref="base.adminResubmitOrders" ui-sref-opts="{reload: true}"><i class="fa fa-send-o"></i> Resubmit Orders</a>
+
 	<a ui-sref-active="active" ui-sref="base.adminCreditCards" ui-sref-opts="{reload: true}"><i class="fa fa-credit-card"></i> Credit Card Cleanup</a>
-	<a ui-sref-active="active" ui-sref="base.adminDiagnosticTool" ui-sref-opts="{reload: true}"><i class="fa fa-laptop"></i> Diagnostic Tool</a>
+
 	<a ui-sref-active="active" ui-sref="base.adminMisc" ui-sref-opts="{reload: true}"><i class="fa fa-gear"></i> Miscellaneous</a>
 	<div class="left-nav-dropdown" role="dropdown" dropdown auto-close="disabled" ng-if="base.dataWarehouseUnlocked">
 		<button type="button" dropdown-toggle>
@@ -33,7 +33,7 @@
 			Data Warehouse
 		</button>
 		<nav dropdown-menu>
-			{#<a ui-sref="base.adminDataWarehouse({tab: 'warehouse'})">Azure DataWarehouse</a>#}
+	
 			<a ui-sref="base.adminDataWarehouse({tab: 'docdb'})">Azure DocDB</a>
 		</nav>
 	</div>

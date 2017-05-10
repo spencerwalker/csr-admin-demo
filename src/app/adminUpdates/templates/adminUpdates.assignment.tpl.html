@@ -1,0 +1,53 @@
+<form name="updateAssignmentForm" am-layout="vertical" ng-submit="updateAssignment.save()">
+    <header class="aveda-blue-header">
+        <h3>Urgent Update Assignment</h3>
+    </header>
+    <fieldset am-layout>
+        <div role="group" am-padding>
+            <label>
+                <input type="checkbox" ng-model="updateAssignment.update.Assignments.AllUsers" ng-change="updateAssignment.allUsersToggle(updateAssignment.update.Assignments.AllUsers)" />
+                All Users
+            </label>
+            <label>
+                <input type="checkbox" ng-model="updateAssignment.update.Assignments.Internal" ng-change="updateAssignment.internalUsersToggle(updateAssignment.update.Assignments.Internal)" ng-disabled="updateAssignment.update.Assignments.AllUsers" />
+                Internal Only
+            </label>
+            <!--<label>
+                <input type="checkbox" ng-model="updateAssignment.update.Assignments.External" ng-disabled="updateAssignment.update.Assignments.AllUsers" />
+                External Users
+            </label>-->
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Regions (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="region in updateAssignment.regions">
+                <input type="checkbox" ng-model="region.Selected" ng-disabled="updateAssignment.update.Assignments.AllUsers || updateAssignment.update.Assignments.Internal" />
+                {{region.Name}}
+            </label>
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Salon Types (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="type in updateAssignment.salonTypes">
+                <input type="checkbox" ng-model="type.Selected" ng-disabled="updateAssignment.update.Assignments.AllUsers || updateAssignment.update.Assignments.Internal" />
+                {{type.Type}}
+            </label>
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Plants (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="plant in updateAssignment.plants">
+                <input type="checkbox" ng-model="plant.Selected" ng-disabled="updateAssignment.update.Assignments.AllUsers || updateAssignment.update.Assignments.Internal" />
+                {{plant.Plant}}
+            </label>
+        </div>
+    </fieldset>
+    <hr/>
+    <div am-padding>
+        <button type="button" class="am-btn" ng-click="updateAssignment.cancel()">Cancel</button>
+        <button type="submit" class="am-btn am-primary">Save</button>
+    </div>
+</form>

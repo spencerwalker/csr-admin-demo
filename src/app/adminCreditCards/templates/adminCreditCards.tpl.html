@@ -1,0 +1,74 @@
+<article am-layout="horizontal">
+    <header class="aveda-blue-header">
+        <h3>Credit Card Cleanup</h3>
+        <button class="am-btn am-primary" ng-click="adminCreditCards.activateDeactivate()" ng-disabled="(adminCreditCards.creditCards | filter:{Selected: true}).length == 0"><i class="fa fa-power-off" ng-show="(adminCreditCards.creditCards | filter:{Selected: true}).length"></i> Activate/Deactivate</button>
+    </header>
+    <div am-padding-l="large">
+        <form name="creditCardFilters">
+            <fieldset am-layout="inline">
+                <div role="group">
+                    <label>Salon:</label>
+                    <input type="text" ng-model="adminCreditCards.filters.SalonTerm" />
+                    <label>Card Type:</label>
+                    <select ng-model="adminCreditCards.filters.CardType" ng-options="cardType.Type as cardType.Name for cardType in adminCreditCards.cardTypes">
+                        <option value=""></option>
+                    </select>
+                    <label>Status:</label>
+                    <select ng-model="adminCreditCards.filters.Status" ng-options="status as status for status in ['Active', 'Disabled']">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </fieldset>
+        </form>
+        <form name="creditCardFilters2">
+            <fieldset am-layout="inline">
+                <label>Last Used Date</label>
+                <button class="am-btn" ng-click="adminCreditCards.openDatepicker($event, 'lastUsedStart')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="Start" datepicker-popup="shortDate" is-open="adminCreditCards.lastUsedStart" ng-model="adminCreditCards.filters.LastUsed.Start" />
+                <button class="am-btn" ng-click="adminCreditCards.openDatepicker($event, 'lastUsedEnd')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="End" datepicker-popup="shortDate" is-open="adminCreditCards.lastUsedEnd" ng-model="adminCreditCards.filters.LastUsed.End" />
+                <label>Exp. Date</label>
+                <button class="am-btn" ng-click="adminCreditCards.openDatepicker($event, 'expStart')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="Start" datepicker-popup="shortDate" is-open="adminCreditCards.expStart" ng-model="adminCreditCards.filters.ExpDate.Start" />
+                <button class="am-btn" ng-click="adminCreditCards.openDatepicker($event, 'expEnd')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="End" datepicker-popup="shortDate" is-open="adminCreditCards.expEnd" ng-model="adminCreditCards.filters.ExpDate.End" />
+            </fieldset>
+        </form>
+        <article id="CreditCardList" am-layout="aveda-panel">
+            <div am-block="table-block header gutter">
+                <div am-block="1"></div>
+                <div am-block="2" ng-click="adminCreditCards.selectColumn('Token')">Token ID</span></div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('CardType')">Type</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('TempCardHolderName')">User</div>
+                <div am-block="2" ng-click="adminCreditCards.selectColumn('xp.Salon.Name')">Salon</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('ExpirationDate')">Exp. Date</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('xp.DateLastUsed')">Date Last Used</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('xp.DateLastModified')">Date Last Modified</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('xp.ModifierFirstName')">Last Modified By</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('xp.Personal')">Personal/<br>Salon</div>
+                <div am-block="1" ng-click="adminCreditCards.selectColumn('xp.Active')">Status</div>
+            </div>
+            <div am-block="table-block striped hover gutter" ng-repeat="card in adminCreditCards.creditCards | creditcardfilter:adminCreditCards.filters | paginate:(adminCreditCards.currentPage-1) * 10 | limitTo:10 | orderBy:adminCreditCards.sortByColumn:adminCreditCards.reverseSort" ng-if="adminCreditCards.creditCards.length">
+                <div am-block="1" ng-if="application.$ocMedia('orientation:landscape')">
+                    <input type="checkbox" ng-model="card.Selected" />
+                </div>
+                <div am-block="2">x{{card.Token}}</div>
+                <div am-block="1">{{card.CardType}}</div>
+                <div am-block="1">{{card.TempCardHolderName}}</div>
+                <div am-block="2">{{card.xp.Salon ? (card.xp.Salon.Name + ' (' + (card.xp.Salon.ID | avedaSoldToID) + ')') : 'N/A'}}</div>
+                <div am-block="1">{{card.ExpirationDate | date: 'MM/yy' : 'UTC'}}</div>
+                <div am-block="1">{{card.xp.DateLastUsed ? (card.xp.DateLastUsed | date:'shortDate') : 'N/A'}}</div>
+                <div am-block="1">{{card.xp.DateLastModified | date:'shortDate'}}</div>
+                <div am-block="1">{{card.xp.ModifierFirstName}} {{card.xp.ModifierLastName}}</div>
+                <div am-block="1">{{card.xp.Personal ? 'Personal' : 'Salon'}}</div>
+                <div am-block="1"><i class="fa fa-check green-text" ng-if="card.xp.Active"></i></div>
+            </div>
+            <div am-padding class="am-text-c gray-text" ng-if="!adminCreditCards.creditCards.length">
+                No credit cards to show.
+            </div>
+        </article>
+        <div class="am-text-c" ng-if="adminCreditCards.creditCards.length > 5">
+            <uib-pagination total-items="(adminCreditCards.creditCards | creditcardfilter:adminCreditCards.filters).length" items-per-page="10" ng-model="adminCreditCards.currentPage" max-size="7" class="pagination-sm" boundary-links="true" rotate="false"></uib-pagination>
+        </div>
+    </div>
+</article>

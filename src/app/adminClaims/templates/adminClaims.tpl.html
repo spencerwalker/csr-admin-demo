@@ -1,0 +1,80 @@
+<header class="aveda-blue-header">
+    <h3>Claims</h3>
+    <nav am-layout="aveda-tabs">
+        <b><a ui-sref-active="active" ui-sref="{claimType: 'Order'}" ui-sref-opts="{reload: true}">Order Claims</a></b>
+        <b><a ui-sref-active="active" ui-sref="{claimType: 'NonOrder'}" ui-sref-opts="{reload: true}">Non-Order Claims</a></b>
+    </nav>
+</header>
+    <div class="order-claim-category-options">
+        <script type="text/ng-template" id="nodes_renderer.html">
+            <div ui-tree-handle class="tree-node tree-node-content claim-category" ng-class="{'sub-category': node.Level == 'SubCategory'}">
+                <i ng-if="node.SubCategories" data-nodrag ng-click="adminClaims.toggle(this)" ng-init="adminClaims.toggle(this)" class="fa" ng-class="{'fa-caret-right': collapsed,'fa-caret-down': !collapsed}"></i>
+                <p ng-if="!Editing">{{node.Name}}</p>
+                <p ng-if="Editing"><input type="text" ng-model="node.NewName" /></p>
+                <p>
+                    <label>
+                        <input type="checkbox" ng-model="node.DefaultOption" ng-change="adminClaims.setAsDefaultOption(this, node)" />
+                        Default
+                    </label>
+                </p>
+                <a class="am-btn am-primary" ng-show="Editing" data-nodrag ng-click="adminClaims.saveCategory(this, node)" ng-disabled="!node.NewName"><i class="fa fa-save"></i> Save</a>
+                <a class="am-btn am-secondary" data-nodrag ng-click="adminClaims.editCategory(this, node)"><i class="fa" ng-class="{'fa-edit': !Editing, 'fa-times': Editing}"></i> {{Editing ? 'Cancel' : 'Edit'}}</a>
+                <a class="am-btn am-secondary" data-nodrag ng-click="adminClaims.deleteCategory(this, node)"><i class="fa fa-times"></i> Remove</a>
+            </div>
+            <ol ui-tree-nodes ng-model="node.SubCategories" ng-class="{'ng-hide': collapsed}">
+                <li ng-repeat="node in node.SubCategories | orderObjectBy:'ListOrder'" ui-tree-node ng-include="'nodes_renderer.html'">
+            </ol>
+        </script>
+        <article>
+            <section am-padding-l="large" am-padding-p="small">
+                <b>New Category</b>
+                <form name="newClaimCategoryForm" ng-submit="adminClaims.newCategory(adminClaims.newCategoryOption)">
+                    <fieldset am-layout="stack">
+                        <div role="group toolbar">
+                            <div role="dropdown" dropdown dropdown-append-to-body>
+                                <button class="am-btn am-secondary" dropdown-toggle>{{adminClaims.newCategoryOption.Parent.Name || 'Choose a parent'}} <i class="fa fa-caret-up"></i></button>
+                                <ul dropdown-menu>
+                                    <li ng-click="adminClaims.newCategoryOption.Parent = {Name: 'No Parent', $id: null}">No Parent</li>
+                                    <li ng-repeat="option in adminClaims.categoryOptions" ng-click="adminClaims.newCategoryOption.Parent = option">{{option.Name}}</li>
+                                </ul>
+                            </div>
+                            <input type="text" ng-model="adminClaims.newCategoryOption.Name"/>
+                            <button type="submit" class="am-btn am-primary"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <b>Categories</b>
+                <div ui-tree="adminClaims.treeOptions" id="tree-root" ng-if="adminClaims.categoryOptions.length">
+                    <ol ui-tree-nodes ng-model="adminClaims.categoryOptions">
+                        <li ng-repeat="node in adminClaims.categoryOptions" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                    </ol>
+                </div>
+            </section>
+            <section></section>
+        </article>
+    </div>
+    <div class="order-claim-category-options">
+        <article ng-if="adminClaims.claimType === 'Order'">
+            <section am-padding-l="large" am-padding-p="small">
+                <b>New Claim Reason</b>
+                <form name="newClaimReasonForm" ng-submit="adminClaims.newReason()">
+                    <fieldset am-layout="stack">
+                        <div role="group toolbar">
+                            <input type="text" ng-model="adminClaims.newClaimReason"/>
+                            <button type="submit" class="am-btn am-primary"><i class="fa fa-save"></i> Save</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <b>Claim Reasons</b>
+                <div ng-if="adminClaims.claimReasons.length">
+                    <ol class="angular-ui-tree-nodes" ng-repeat="reason in adminClaims.claimReasons">
+                        <li class="tree-node tree-node-content">
+                            <p>{{reason}}</p>
+                            <a class="am-btn am-secondary pull-right" ng-click="adminClaims.deleteReason(reason)"><i class="fa fa-times"></i> Remove</a>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+            <section></section>
+        </article>
+    </div>

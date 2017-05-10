@@ -1,0 +1,42 @@
+<header class="aveda-blue-header">
+    <h3>New Category</h3>
+</header>
+<form name="createNewCategory" am-layout="horizontal" am-padding ng-submit="createCategoryModal.createNewCategory()"
+      cg-busy="{promise:createCategoryModal.modalLoading.promise, message:createCategoryModal.modalLoading.message, templateUrl:'base/templates/base.loading.tpl.html'}">
+    <fieldset am-layout="stack">
+        <div role="group">
+            <label>Name</label>
+            <input type="text" ng-model="createCategoryModal.newCategory.Name" ng-pattern="/^[a-zA-Z0-9 ]*$/" ng-required="true"/>
+            <label>Description</label>
+            <textarea rows="5" ng-model="createCategoryModal.newCategory.Description"></textarea>
+            <label>Image</label>
+            <avedafileupload extensions="jpg, jpeg, gif, png" object="createCategoryModal.newCategory"></avedafileupload>
+            <label>
+                <input type="checkbox" ng-model="createCategoryModal.newCategory.Active" />
+                Active
+            </label>
+            <section am-block>
+                <div class="product-assignment-list">
+                    <label>Search Products</label>
+                    <input type="text" ng-model="createCategoryModal.searchTerm" ng-change="createCategoryModal.searchProducts(createCategoryModal.searchTerm)" placeholder="Search products..." />
+                    <select name="AvailableProducts" multiple ng-multiple="true"
+                            ng-model="createCategoryModal.selectedAvailableProducts"
+                            ng-options="product as (product.Name + ' ' + (product.xp.Size ? product.xp.Size : '') + ' (' + (product.ID) + ')') for product in createCategoryModal.searchResults | categoryProductSearch:createCategoryModal.searchTerm | orderBy:'Name'">
+                        <option value="" ng-disabled="true" ng-show="createCategoryModal.searchingProducts">Searching...</option>
+                    </select>
+                    <button type="button" class="am-btn am-primary" ng-click="createCategoryModal.addProducts()" ng-disabled="!createCategoryModal.selectedAvailableProducts || !createCategoryModal.selectedAvailableProducts.length">Add</button>
+                </div>
+                <div class="product-assignment-list">
+                    <label>Assigned Products</label>
+                    <select name="CategoryProducts" multiple ng-multiple="true"
+                            ng-model="createCategoryModal.selectedCategoryProducts"
+                            ng-options="product as (product.Name + ' ' + (product.xp.Size ? product.xp.Size : '') + ' (' + (product.ID) + ')') for product in createCategoryModal.categoryProducts | orderBy:'Name'">
+                    </select>
+                    <button type="button" class="am-btn" ng-click="createCategoryModal.removeProducts()" ng-disabled="!createCategoryModal.selectedCategoryProducts || !createCategoryModal.selectedCategoryProducts.length">Remove</button>
+                </div>
+            </section>
+            <button type="button" class="am-btn" ng-click="createCategoryModal.cancelCreate()">Cancel</button>
+            <button type="submit" class="am-btn am-primary" ng-disabled="createNewCategory.$invalid">Save</button>
+        </div>
+    </fieldset>
+</form>

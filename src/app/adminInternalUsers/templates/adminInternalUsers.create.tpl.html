@@ -1,0 +1,73 @@
+<header class="aveda-blue-header">
+    <h3>New
+        <span ng-show="adminCreateInternalUsers.accessLevel == 'CSR'"> CSR</span>
+        <span ng-show="adminCreateInternalUsers.accessLevel == 'RegionVP'"> Region VP</span>
+        <span ng-show="adminCreateInternalUsers.accessLevel == 'POD'"> POD Director</span>
+        <span ng-show="adminCreateInternalUsers.accessLevel == 'SDP'"> Sales Person</span>
+        <span ng-show="adminCreateInternalUsers.accessLevel == 'Custom'"> Aveda User</span>
+    </h3>
+</header>
+<form name="createNewUser" am-layout="horizontal" am-padding-l="large" am-padding-p="small" ng-submit="adminCreateInternalUsers.createNewUser()" autocomplete="off">
+    <fieldset am-layout="stack">
+        <div role="group" ng-if="adminCreateInternalUsers.accessLevel == 'SDP'">
+            <label>Choose an SDP</label>
+            <select name="SDP" ng-model="adminCreateInternalUsers.newUser.SDPChoice"
+                    ng-options="sdp as (sdp.Name + ' - ' + sdp.ID) for sdp in adminCreateInternalUsers.accessLevelData"
+                    ng-required="true"></select>
+        </div>
+        <div role="group" am-block="gutter" ng-if="adminCreateInternalUsers.accessLevel != 'SDP'">
+            <div am-block="6">
+                <label>First Name</label>
+                <input type="text" name="FirstName" ng-model="adminCreateInternalUsers.newUser.FirstName" ng-required="true" autocomplete="off" />
+            </div>
+            <div am-block="6">
+                <label>Last Name</label>
+                <input type="text" name="LastName" ng-model="adminCreateInternalUsers.newUser.LastName" ng-required="true" autocomplete="off" />
+            </div>
+
+        </div>
+        <div role="group">
+            <label>Username</label>
+            <input type="text" name="Username" ng-model="adminCreateInternalUsers.newUser.Username" ng-required="true" autocomplete="off" />
+            <label>Password <i class="fa fa-check" ng-show="adminCreateInternalUsers.newUser.Password && adminCreateInternalUsers.newUser.ConfirmPassword"></i></label>
+            <input type="password" name="Password" ng-model="adminCreateInternalUsers.newUser.Password" ng-required="true" autocomplete="off" />
+            <label>Confirm Password <i class="fa" ng-class="{'fa-check': (adminCreateInternalUsers.newUser.Password == adminCreateInternalUsers.newUser.ConfirmPassword), 'fa-times': (adminCreateInternalUsers.newUser.Password != adminCreateInternalUsers.newUser.ConfirmPassword)}" ng-show="adminCreateInternalUsers.newUser.Password && adminCreateInternalUsers.newUser.ConfirmPassword"></i></label>
+            <input type="password" name="ConfirmPassword" ng-model="adminCreateInternalUsers.newUser.ConfirmPassword" ng-required="true" autocomplete="off" />
+            <label>Email</label>
+            <input type="email" name="Email" ng-model="adminCreateInternalUsers.newUser.Email" ng-required="true" autocomplete="off" ng-pattern="/^.*(?=.{8,})((?=.*\d)(?=.*[a-zA-Z])|(?=.*\W)(?=.*[a-zA-Z])|(?=.*\d)(?=.*\W)).*$/" />
+            <label>Phone</label>
+            <input type="tel" name="Phone" ng-model="adminCreateInternalUsers.newUser.Phone" autocomplete="off" />
+        </div>
+        <div role="group" ng-if="adminCreateInternalUsers.accessLevel == 'RegionVP'">
+            <label>Region Assignment</label>
+            <select name="RegionAssignment" multiple ng-multiple="true"
+                    ng-model="adminCreateInternalUsers.newUser.Regions"
+                    ng-options="region as region.Name for region in adminCreateInternalUsers.accessLevelData"
+                    ng-required="true"></select>
+        </div>
+        <div role="group" ng-if="adminCreateInternalUsers.accessLevel == 'POD'">
+            <label>POD Assignment</label>
+            <select name="PODAssignment" multiple ng-multiple="true"
+                    ng-model="adminCreateInternalUsers.newUser.PODs"
+                    ng-options="pod as pod.Name for pod in adminCreateInternalUsers.accessLevelData"
+                    ng-required="true"></select>
+        </div>
+        <button type="button" class="am-btn" ui-sref="base.adminInternalUsers({accessLevel:adminCreateInternalUsers.accessLevel})">Cancel</button>
+        <button type="button" class="am-btn" ng-click="adminCreateInternalUsers.openPermissions()"><i class="fa fa-cog"></i> Edit Permissions</button>
+<!--
+        <button type="button" class="am-btn" ng-click="adminCreateInternalUsers.editCustomAssignments()" ng-if="adminCreateInternalUsers.accessLevel != 'CSR'"><i class="fa fa-cog"></i> Edit Custom Sold-To Assignments</button>
+-->
+        <button type="submit" ng-disabled="createNewUser.$invalid || (adminCreateInternalUsers.newUser.Password != adminCreateInternalUsers.newUser.ConfirmPassword)" class="am-btn am-primary">Save</button>
+        <div ng-show="adminCreateInternalUsers.errorMessage">{{adminCreateInternalUsers.errorMessage}}</div>
+    </fieldset>
+    <!--    <fieldset am-layout="stack">
+            <div role="group" am-padding>
+                <div ng-repeat="(permission, assigned) in adminCreateInternalUsers.newUser.PermissionsList">
+                    <label>
+                        <input type="checkbox" ng-model="adminCreateInternalUsers.newUser.PermissionsList[permission]" />
+                        {{adminCreateInternalUsers.permissionsMap[permission]}}
+                    </label>
+                </div>
+            </div>
+        </fieldset>-->
+</form>

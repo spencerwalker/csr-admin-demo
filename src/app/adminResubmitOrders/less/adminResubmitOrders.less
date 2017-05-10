@@ -1,0 +1,66 @@
+article[@{am-layout-var}~='aveda-panel'] {
+  background-color:@aveda-white;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+  font-size:0.8em;
+  margin-bottom:2em;
+  overflow:hidden;
+  header {
+    position:relative;
+    background-color:@aveda-light-blue;
+    align-items:center;
+    padding:0.4em 0.4em 0.4em 1em;
+    span.justify-right {
+      justify-content:flex-end;
+      label,select {
+        flex:0 0 auto !important;
+      }
+    }
+    label {
+      color:@aveda-white;
+    }
+    h6 {
+      padding: 0.8em 0;
+      width:auto;
+      font-size:1em;
+      flex:1 1 auto;
+      font-family:@aveda-body-font-family;
+      margin:0;
+      color:@aveda-white;
+      font-weight:bold;
+      text-transform:uppercase;
+    }
+    button {
+      flex:0 1 auto;
+      margin:0;
+      font-weight:bold;
+      padding:0.5em 1em;
+    }
+  }
+  .panel-scroll {
+    max-height:240px;
+    overflow-y:auto;
+  }
+}
+
+[@{am-block-var}~='table-block'] {
+  padding:@am-root-padding;
+  &[@{am-block-var}~='striped'] {
+    &:nth-of-type(even) {
+      background-color:lighten(@aveda-table-header-bg, 8);
+    }
+  }
+  &[@{am-block-var}~='hover'] {
+    &:hover {
+      background-color:@am-clr-table-row-hover;
+    }
+  }
+  &[@{am-block-var}~='header'] {
+    background-color:@aveda-table-header-bg;
+    font-weight:bold;
+    text-transform:uppercase;
+    padding-bottom:0.5em;
+  }
+  .aveda-pill {
+    margin:-2px;
+  }
+}

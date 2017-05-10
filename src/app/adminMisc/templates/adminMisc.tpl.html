@@ -1,0 +1,20 @@
+<header class="aveda-blue-header">
+    <h3>Miscellaneous</h3>
+</header>
+<article>
+    <section am-padding-l="large" am-padding-p="small">
+        <form name="miscForm">
+            <fieldset am-layout="stack">
+                <label>
+                    <input type="checkbox" ng-model="adminMisc.holidayOrders.xp.HolidayOrdersActive" ng-change="adminMisc.updateHolidayOrders()" />
+                    Holiday Orders Enabled
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="adminMisc.company.xp.ProcessCreditCards" ng-change="adminMisc.updateProcessCreditCard()" />
+                    Process Credit Cards
+                </label>
+                <button type="button" class="am-btn am-primary" ng-click="adminMisc.updateHierarchy()">Update Customer Master Hierarchy</button>
+            </fieldset>
+        </form>
+    </section>
+</article>

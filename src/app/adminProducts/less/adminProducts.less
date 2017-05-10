@@ -1,0 +1,113 @@
+.product-list-table {
+  tbody tr[ng-click] {
+	>td {
+	  transition:all 200ms ease-in-out;
+	}
+	&:hover > td {
+	  transition:all 200ms ease-in-out;
+	  color:white;
+	  background-color:@aveda-green;
+	}
+  }
+}
+
+.aveda-product-list {
+  min-width:400px;
+  ul {
+	max-height:~'calc(100vh - 176px)';
+	width:100%;
+	overflow:auto;
+	list-style: none;
+	margin:0;
+	padding:0;
+	li {
+	  font-size:0.8em;
+	  background-color:@aveda-white;
+	  border-bottom:1px solid @aveda-gray;
+	  padding:@am-root-padding;
+	  position:relative;
+	  &:after {
+		content:' ';
+		position:absolute;
+		right:0;
+		top:0;
+		bottom:0;
+		width:0;
+		background-color:@aveda-green;
+		transition:width 200ms ease-in-out;
+	  }
+	  &.selected {
+		&:after {
+		  width:5px;
+		}
+	  }
+	  h3,p {
+		margin:0;
+		padding:0;
+	  }
+	}
+  }
+}
+
+form[name="filterProducts"] {
+  input {
+	border:none;
+	border-bottom:1px solid @aveda-gray;
+  }
+}
+
+.aveda-admin-product-detail {
+  & > h3 {
+	padding-left:1em;
+	padding-right:1em;
+  }
+  aside {
+	margin-top:@am-root-margin;
+	padding-left:@am-root-padding + 1em;
+	min-width:450px;
+  }
+  section {
+	padding-left:@am-root-padding + 1em;
+	padding-right:@am-root-padding + 1em;
+  }
+  figure {
+	max-width:200px;
+	padding:@am-root-padding 0;
+  }
+}
+
+.product-search-result {
+  min-width:600px;
+  display:flex;
+  flex-flow:row nowrap;
+  align-items:center;
+  figure {
+	min-width:115px;
+	max-width:115px;
+	padding-right:1em;
+	flex:0;
+  }
+  h6 {
+	margin:0;
+	small {
+	  color:@aveda-gray-text;
+	}
+  }
+  p {
+	margin:0;
+	max-width:100px;
+	padding:1em;
+	font-weight:bold;
+  }
+}
+
+form[name="categoryAssignmentForm"] .angular-ui-tree-handle {
+  cursor: default;
+}
+
+div.free-item-configuration {
+	margin-left: 1em;
+	.free-item-inputs {
+		padding-right: 1em;
+	}
+}

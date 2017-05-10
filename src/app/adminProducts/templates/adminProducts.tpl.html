@@ -1,0 +1,221 @@
+
+	<header class="aveda-blue-header">
+		<h3>Administer Products</h3>
+	</header>
+	<form name="adminProductSearch" am-layout="vertical" am-padding-l="large" am-padding-p="small" class="avedaProductSearch">
+		<blockquote style="margin-top:0;">
+			Begin administering products by searching for the desired product and clicking it from the dropdown. Your changes will only take effect after you click the "save changes" button.
+		</blockquote>
+		<fieldset am-layout="stack">
+			<div role="group">
+				<input type="search" placeholder="Find a product..."
+					   ng-model="adminProducts.searchTerm"
+					   typeahead-append-to-body="true"
+					   typeahead-wait-ms="500"
+					   typeahead-focus-first="false"
+					   typeahead-min-length="3"
+					   typeahead-loading="adminProducts.loadingSearch"
+					   typeahead="product as product.Name for product in adminProducts.searchProducts($viewValue)"
+					   typeahead-template-url="adminProducts/templates/adminProducts.productSearch.tpl.html"
+					   typeahead-on-select="adminProducts.productSearchSelect($item)" autofocus/>
+				<i ng-show="adminProducts.loadingSearch" class="fa fa-circle-o-notch fa-spin"></i>
+			</div>
+<!--			<div role="group">
+				<button type="button" class="am-btn am-primary" ng-click="adminProducts.getUnassignedProducts()">Find Unassigned Products</button>
+			</div>-->
+		</fieldset>
+		<div ng-show="adminProducts.showUnassignedProducts">
+			<div class="am-text-c">
+				<uib-pagination total-items="adminProducts.totalUnassignedProducts" items-per-page="20" ng-model="adminProducts.currentUnassignedProductsPage" max-size="7" class="pagination-sm" boundary-links="true" rotate="false"></uib-pagination>
+			</div>
+			<table am-layout="aveda-table" class="product-list-table">
+				<colgroup>
+					<col/>
+				</colgroup>
+				<thead>
+				<tr class="panel-header">
+					<th class="am-text-l" colspan="3">Unassigned Products</th>
+				</tr>
+				<tr>
+					<th ng-click="adminProducts.selectOrderByColumn('ID')">ID</th>
+					<th ng-click="adminProducts.selectOrderByColumn('Name')">Name</th>
+					<th ng-click="adminProducts.selectOrderByColumn('xp.UPC')">UPC</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-click="adminProducts.productSearchSelect(product)" ng-repeat="product in adminProducts.unassignedProducts | paginate:(adminProducts.currentUnassignedProductsPage-1) * 20 | limitTo:20">
+					<td>{{product.ID}}</td>
+					<td>{{product.Name}}</td>
+					<td>{{product.xp.UPC || 'None'}}</td>
+					<!--<td><button type="button" class="am-btn" ng-click="adminProducts.productSearchSelect(product)">Edit</button></td>-->
+				</tr>
+				</tbody>
+			</table>
+			<div class="am-text-c">
+				<uib-pagination total-items="adminProducts.totalUnassignedProducts" items-per-page="20" ng-model="adminProducts.currentUnassignedProductsPage" max-size="7" class="pagination-sm" boundary-links="true" rotate="false"></uib-pagination>
+				<div ng-if="adminProducts.showMarkdownSpecButton">
+					<br />
+					<p><b><i class="fa fa-exclamation-triangle aveda-red-text"></i> Some of these products are missing required Markdown Specs. Click the button below to automatically assign these specs to the correct products.</b></p>
+					<button type="button" class="am-btn am-secondary" ng-click="adminProducts.assignMarkdownSpecs()">Create Markdown Specs</button>
+				</div>
+			</div>
+		</div>
+		<button ng-show="adminProducts.SelectedProduct" class="am-btn" ng-click="adminProducts.backToList()"><i class="fa fa-arrow-left"></i> Back to list</button>
+	</form>
+	<article class="aveda-admin-product-detail" ng-show="adminProducts.SelectedProduct">
+		<aside>
+			<table am-layout="aveda-grid-well">
+				<thead>
+				<th colspan="2">Product Information</th>
+				</thead>
+				<tbody>
+				<tr>
+					<td>SAP Description:</td>
+					<td>{{adminProducts.SelectedProduct.xp.Description}}</td>
+				</tr>
+				<tr>
+					<td>Material #:</td>
+					<td>{{adminProducts.SelectedProduct.ID}}</td>
+				</tr>
+				<tr>
+					<td>UPC:</td>
+					<td>{{adminProducts.SelectedProduct.xp.UPC}}</td>
+				</tr>
+				<tr>
+					<td>Product Type:</td>
+					<td>{{adminProducts.SelectedProduct.xp.ProductType}}</td>
+				</tr>
+				<tr>
+					<td>D-Chain Specific Status:</td>
+					<td>{{adminProducts.SelectedProduct.xp.DChainSpecificStatus | dChainSpecificStatus}}</td>
+				</tr>
+				<tr>
+					<td>Plant:</td>
+					<td>{{adminProducts.SelectedProduct.xp.DeliveryPlant}}</td>
+				</tr>
+				<tr>
+					<td>Case:</td>
+					<td>{{adminProducts.SelectedProduct.xp.Case}}</td>
+				</tr>
+				<tr>
+					<td>EA:</td>
+					<td>{{adminProducts.SelectedProduct.xp.EA}}</td>
+				</tr>
+				<tr>
+					<td>Unit:</td>
+					<td>{{adminProducts.SelectedProduct.xp.Unit}}</td>
+				</tr>
+				</tbody>
+			</table>
+		</aside>
+		<section>
+			<form name="editProduct" am-layout="horizontal" ng-submit="adminProducts.saveProduct()">
+				<fieldset am-layout="stack">
+					<div role="group">
+						<label>Product Name</label>
+						<input type="text" ng-model="adminProducts.SelectedProduct.Name"/>
+						<label>Size</label>
+						<input type="text" ng-model="adminProducts.SelectedProduct.xp.Size"/>
+						<label>Product Description</label>
+						<textarea rows="5" ng-model="adminProducts.SelectedProduct.Description"></textarea>
+						<label>Quantity Multiplier:</label>
+						<input type="text" ng-model="adminProducts.SelectedProduct.QuantityMultiplier"/>
+						<button type="button" class="am-btn" ng-click="adminProducts.undoChanges()"><i class="fa fa-refresh"></i> Revert Changes</button>
+						<button type="submit" class="am-btn am-primary">Save Changes</button>
+					</div>
+				</fieldset>
+				<fieldset am-layout="stack" am-padding="large">
+					<div role="group">
+						<label ng-if="adminProducts.SelectedProduct.xp.ProductType == 'Retail'">
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.BackBarEligible"/> Eligible for Back Bar
+						</label>
+						<label ng-if="adminProducts.SelectedProduct.xp.ProductType == 'Retail'">
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.TesterEligible"/> Eligible for Tester
+						</label>
+						<label>
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.CustomizedMarketing"/> Customized Marketing Product
+						</label>
+						<label>
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.ClientDislike"/> Eligible for Client Dislike
+						</label>
+						<label>
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.Holiday"/> Eligible for Holiday Orders
+						</label>
+						<label>
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.Launch"/> Eligible for Launch Orders
+						</label>
+						<label>
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.LongTermBackOrder"/> Long Term Back Order
+						</label>
+						<label>
+							<input type="checkbox" ng-model="adminProducts.SelectedProduct.xp.FreeItem.Active" /> Free Item
+						</label>
+						<div ng-show="adminProducts.SelectedProduct.xp.FreeItem.Active" class="free-item-configuration">
+							<label>Free Maximum Quantity by Cust Grp 2</label>
+							<div am-block>
+								<div am-block="6" class="free-item-inputs">
+									<label>101</label>
+									<input type="number" min="1" ng-model="adminProducts.SelectedProduct.xp.FreeItem.OneHundredOne" ng-required="adminProducts.SelectedProduct.xp.FreeItem.Active" />
+								</div>
+								<div am-block="6" class="free-item-inputs">
+									<label>Blank</label>
+									<input type="number" min="1" ng-model="adminProducts.SelectedProduct.xp.FreeItem.Blank" ng-required="adminProducts.SelectedProduct.xp.FreeItem.Active" />
+								</div>
+							</div>
+						</div>
+						<label>Product Image</label>
+						<figure ng-if="adminProducts.SelectedProduct.xp.Image.URL">
+							<img ng-src="{{adminProducts.SelectedProduct.xp.Image.URL}}" />
+						</figure>
+						<avedafileupload extensions="jpg, jpeg, gif, png" object="adminProducts.SelectedProduct"></avedafileupload>
+						<button type="button" class="am-btn" ng-click="adminProducts.editCategoryAssignments()">Edit Category Assignments</button>
+					</div>
+				</fieldset>
+			</form>
+		</section>
+	</article>
+	<!--<aside class="aveda-product-list">
+		<form am-layout="horizontal" name="filterProducts">
+			<fieldset am-layout="stack">
+				<div role="group">
+					<input type="text" placeholder="Filter products..." ng-model="adminProducts.filterModel"/>
+				</div>
+			</fieldset>
+		</form>
+		<ul>
+			<li ng-repeat="product in adminProducts.ProductList | filter:adminProducts.filterModel" ng-click="adminProducts.selectProduct(product)" ng-class="{selected:adminProducts.SelectedProductCopy.ID == product.ID}">
+				<h4 ng-bind-html="product.Name"></h4>
+				<li><b>Material Number:</b> {{product.ID}}</li>
+				<li><b>UPC:</b> {{product.xp.UPC}}</li>
+			</li>
+		</ul>
+	</aside>
+	<section am-padding ng-show="adminProducts.SelectedProduct">
+		<li><b>Material Number:</b> {{adminProducts.SelectedProduct.ID}}</li>
+		<li><b>UPC:</b> {{adminProducts.SelectedProduct.xp.UPC}}</li>
+		<li><b>D-Chain Specific Status: </b> {{adminProducts.SelectedProduct.xp.DChainSpecificStatus}}</li>
+		<li><b>Plant:</b> {{adminProducts.SelectedProduct.xp.DeliveryPlant}}</li>
+		<li><b>Case:</b> {{adminProducts.SelectedProduct.xp.Case}}</li>
+		<li><b>EA:</b> {{adminProducts.SelectedProduct.xp.EA}}</li>
+		<li><b>Unit:</b> {{adminProducts.SelectedProduct.xp.Unit}}</li>
+		<form name="editProduct" ng-submit="adminProducts.saveProduct()">
+			<fieldset am-layout="stack">
+				<div role="group">
+					<label>Product Name</label>
+					<input type="text" ng-model="adminProducts.SelectedProduct.Name"/>
+					<label>Product Description</label>
+					<textarea rows="5" ng-model="adminProducts.SelectedProduct.Description"></textarea>
+					<label>Quantity Multiplier:</label>
+					<input type="text" ng-model="adminProducts.SelectedProduct.QuantityMultiplier"/>
+					<div>
+						<label>Categories</label>
+						<span ng-repeat="cat in adminProducts.CategoriesList">
+							<div><input type="checkbox" ng-model="cat.Selected" ng-change="adminProducts.trackCategory(cat)">{{cat.ID}}</div>
+						</span>
+					</div>
+					<button type="button" class="am-btn" ng-click="adminProducts.discardChanges()">Discard Changes</button>
+					<button type="submit" class="am-btn am-primary">Save Changes</button>
+				</div>
+			</fieldset>
+		</form>
+	</section>-->

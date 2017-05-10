@@ -1,0 +1,27 @@
+<header class="aveda-blue-header">
+    <h3><span class="green-text">Editing: </span> {{adminEditAdminUser.selectedUser.FirstName + ' ' + adminEditAdminUser.selectedUser.LastName}}</h3>
+</header>
+<form name="editInternalUser" am-layout="horizontal" am-padding-l="large" am-padding-p="small" ng-submit="adminEditAdminUser.updateUser()" autocomplete="off">
+    <fieldset am-layout="stack">
+        <div role="group" am-block="gutter">
+            <div am-block="6">
+                <label>First Name</label>
+                <input type="text" name="FirstName" ng-model="adminEditAdminUser.selectedUser.FirstName" ng-required="true" autocomplete="off" />
+            </div>
+            <div am-block="6">
+                <label>Last Name</label>
+                <input type="text" name="LastName" ng-model="adminEditAdminUser.selectedUser.LastName" ng-required="true" autocomplete="off" />
+            </div>
+        </div>
+        <div role="group">
+            <label>Username</label>
+            <input type="text" name="Username" ng-model="adminEditAdminUser.selectedUser.Username" ng-required="true" autocomplete="off" />
+            <label>Email</label>
+            <input type="email" name="Email" ng-model="adminEditAdminUser.selectedUser.Email" ng-required="true" autocomplete="off" ng-pattern="/^.*(?=.{8,})((?=.*\d)(?=.*[a-zA-Z])|(?=.*\W)(?=.*[a-zA-Z])|(?=.*\d)(?=.*\W)).*$/" />
+        </div>
+        <button type="button" class="am-btn" ui-sref="base.adminAdminUsers">Cancel</button>
+        <button type="button" class="am-btn am-danger" ng-click="adminEditAdminUser.deleteUser()" ng-disabled="adminEditAdminUser.selectedUser.UserID == base.currentUser.ID">Delete</button>
+        <button type="submit" class="am-btn am-primary" ng-disabled="editInternalUser.$invalid">Save</button>
+        <div ng-show="adminEditAdminUser.errorMessage">{{adminEditAdminUser.errorMessage}}</div>
+    </fieldset>
+</form>

@@ -1,0 +1,110 @@
+form {
+  & fieldset { //http://stackoverflow.com/questions/3877959/in-html5-is-the-form-element-a-sectioning-element-like-section
+    &[@{am-layout-var}] {
+      border: none;
+      padding: 0;
+      margin: 0;
+      // <fieldset> is a  replaced element and does not currently allow you to change its display with CSS, flexbox design pattern will break if you make use of <fieldset> element
+      // http://stackoverflow.com/questions/19679337/why-are-not-all-flexbox-elements-behaving-like-flexbox-divs
+      // fieldset for flexbox
+      div[role="group"] {
+        width: 100%;
+        legend {
+          width: 100%;
+          word-wrap: break-word;
+        }
+      }
+      //== Inline
+      &[@{am-layout-var}~="inline"] {
+        // inherits default am-layout semantic root element properties
+      }
+
+      //== Stacked
+      &[@{am-layout-var}~="stack"] {
+        & input:not([type="checkbox"]):not([type="radio"]),
+        & select,
+        & label {
+          width: 100%;
+        }
+      }
+
+      //== Aligned
+      &[@{am-layout-var}~="align"] {
+        & > span {
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: justify;
+          width: 100%;
+          & label,
+          & input:not([type="checkbox"]):not([type="radio"]),
+          & select,
+          & textarea {
+            flex: 1 auto;
+            width: @am-flex-width1;
+            @media (max-width: 30em) {
+              width: 100%;
+            }
+          }
+        }
+        & > div[role="group"] {
+          & > span {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: justify;
+            width: 100%;
+            & label,
+            & input:not([type="checkbox"]):not([type="radio"]),
+            & select,
+            & textarea {
+              flex: 1 auto;
+              width: @am-flex-width1;
+              @media (max-width: 30em) {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+      @media (max-width: 30em) {
+        input:not([type="checkbox"]):not([type="radio"]),
+        select,
+        textarea,
+        label {
+          width: 100%;
+        }
+      }
+      & textarea {
+        resize: vertical;
+        width: 100%;
+      }
+      & input {
+        &[type="checkbox"] {
+          display: inline-block;
+          vertical-align: middle;
+        }
+        &[type="radio"] {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      &  label {
+        display: inline-block;
+        & input {
+          width: auto;
+        }
+      }
+      & select {
+        padding: .35em 0;
+      }
+      & input:not([type="checkbox"]):not([type="radio"]),
+      & select {
+        font-size: 14px;
+        padding: 11px 5px;
+      }
+      & label {
+        font-size: 14px;
+        padding: 11px 0;
+      }
+    }
+  }
+}

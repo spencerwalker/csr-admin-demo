@@ -1,0 +1,77 @@
+// Ambient
+// Ambient is a CSS (flexbox) framework that makes use of HTML5 sections & outlines for semantic scaffolding.
+// http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+*, *:before, *:after {
+  box-sizing: inherit;
+  max-width: 100%; // http://stackoverflow.com/questions/27472595/firefox-34-ignoring-max-width-for-flexbox
+}
+html {
+  box-sizing: border-box;
+  height: calc(100%); // http://css-tricks.com/a-couple-of-use-cases-for-calc/
+}
+body {
+  min-height: 100%;
+  height: 100%;
+  display:flex;
+  flex-flow: row wrap;
+}
+// http://www.w3.org/TR/CSS2/visuren.html
+// Block elements are 100% width of parent element, if width is not specified.
+header,
+nav,
+article,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+div {
+  width: 100%;
+  word-wrap: break-word;
+}
+header,
+nav,
+aside,
+main,
+article,
+section,
+form,
+footer {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  position: relative;
+}
+header {
+  align-self: flex-start;
+}
+main,
+section,
+fieldset, // Fieldset is a root sectioning element and can be styled as flexbox. Nested elements cannot, and require div role="group" container immediately below fieldset
+aside + article {
+  flex: 1 @am-flex-width1;
+  min-width: @am-flex-width1; // fixes firefox issue with flex widths
+}
+aside {
+  flex-basis: @am-flex-width-p1;
+}
+footer {
+  align-self: flex-end;
+  flex-shrink: 0;
+}
+
+@media (orientation:portrait){
+  article {
+    flex-flow: column nowrap;
+  }
+  section,
+  aside {
+    flex-basis: auto; // https://social.msdn.microsoft.com/Forums/ie/en-US/8145c1e8-6e51-4213-ace2-2cfa43b1c018/ie-11-flexbox-with-flexwrap-wrap-doesnt-seem-to-calculate-widths-correctly-boxsizing-ignored?forum=iewebdevelopment
+    width: 100%;
+  }
+}

@@ -1,0 +1,29 @@
+<form name="categoryAssignmentForm" am-layout="vertical" ng-submit="categoryAssignment.save(categoryAssignmentForm)">
+    <header class="aveda-blue-header">
+        <h3>Category Assignments</h3>
+    </header>
+    <script type="text/ng-template" id="nodes_renderer.html">
+        <div ui-tree-handle class="tree-node tree-node-content" ng-class="{'inactive-node':!node.Active}">
+            <p>{{node.Name}}</p>
+            <input type="checkbox" ng-model="node.SelectedToAssign" />
+        </div>
+        <ol ui-tree-nodes ng-model="node.children" ng-class="{'ng-hide': collapsed}">
+            <li ng-repeat="node in node.children" ui-tree-node data-nodrag ng-include="'nodes_renderer.html'">
+            </li>
+        </ol>
+    </script>
+    <article>
+        <section am-padding-l="large" am-padding-p="small">
+            <div ui-tree="categoryAssignment.treeOptions" id="tree-root">
+                <ol ui-tree-nodes ng-model="categoryAssignment.avedaTree">
+                    <li data-nodrag ng-repeat="node in categoryAssignment.avedaTree" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                </ol>
+            </div>
+        </section>
+        <section></section>
+    </article>
+    <div am-padding>
+        <button type="submit" class="am-btn am-primary">Save</button>
+        <button type="button" class="am-btn" ng-click="categoryAssignment.cancel()">Cancel</button>
+    </div>
+</form>

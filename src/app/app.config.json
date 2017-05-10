@@ -1,0 +1,8 @@
+{
+  "appname": "CSR-Demo",
+  "scope": ["FullAccess"],
+  "buyerid": "EnterpriseCosmetics",
+  "catalogid": "EnterpriseCosmetics",
+  "environment": "production",
+  "defaultstate": "base.dashboard"
+}

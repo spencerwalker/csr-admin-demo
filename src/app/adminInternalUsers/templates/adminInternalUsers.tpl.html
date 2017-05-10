@@ -1,0 +1,58 @@
+<header class="aveda-blue-header">
+    <nav am-layout="aveda-tabs">
+        <a ui-sref-active="active" ui-sref="base.adminInternalUsers({accessLevel: 'CSR'})">
+            CSRs
+        </a>
+        <a ui-sref-active="active" ui-sref="base.adminInternalUsers({accessLevel: 'RegionVP'})">
+            Regional Vice Presidents
+        </a>
+        <a ui-sref-active="active" ui-sref="base.adminInternalUsers({accessLevel: 'POD'})">
+            POD Directors
+        </a>
+        <a ui-sref-active="active" ui-sref="base.adminInternalUsers({accessLevel: 'SDP'})">
+            Sales People
+        </a>
+        <a ui-sref-active="active" ui-sref="base.adminInternalUsers({accessLevel: 'Custom'})">
+            Aveda User
+        </a>
+    </nav>
+</header>
+<section am-padding-l="large">
+    <form am-layout="horizontal" am-margin-l="bottom" am-padding-p="small" name="filterUsers">
+        <fieldset am-layout="stack">
+            <div role="group toolbar">
+                <button type="button" am-padding class="am-btn am-primary" ui-sref="base.adminInternalUsers.create({existingSDPs:adminInternalUsers.accessLevel == 'SDP' ? adminInternalUsers.userList : null})">Create New <i class="fa fa-plus-circle"></i></button>
+                <input type="text" placeholder="Filter users..." ng-model="adminInternalUsers.filterModel"/>
+            </div>
+        </fieldset>
+    </form>
+    <table am-layout="aveda-table">
+        <thead ng-show="adminInternalUsers.userList.length">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th ng-if="adminInternalUsers.accessLevel != 'RegionVP' && adminInternalUsers.accessLevel != 'CSR'">PODs</th>
+            <th ng-if="adminInternalUsers.accessLevel != 'CSR'">Regions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in adminInternalUsers.userList  | filter:adminInternalUsers.filterModel">
+            <td><a ui-sref="base.adminInternalUsers.edit({id: user.ID})" ui-sref-opts="{reload: true}">{{user.FirstName + ' ' + user.LastName}}</a></td>
+            <td>{{user.Username}}</td>
+            <td>{{user.Email}}</td>
+            <td ng-if="adminInternalUsers.accessLevel != 'RegionVP' && adminInternalUsers.accessLevel != 'CSR'">
+                <span ng-repeat="pod in user.xp.PODs">{{pod.Name}}<br/></span>
+            </td>
+            <td ng-if="adminInternalUsers.accessLevel != 'CSR'">
+                <span ng-repeat="region in user.xp.Regions">{{region.Name}}<br/></span>
+            </td>
+        </tr>
+        <tr ng-if="!adminInternalUsers.userList.length">
+            <td class="am-text-c">
+                No {{adminInternalUsers.accessLevel | avedaInternalUsersType}} have been created yet.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>

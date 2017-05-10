@@ -1,0 +1,38 @@
+<article am-layout="horizontal">
+    <header class="aveda-blue-header">
+        <h3>Resubmit Orders</h3>
+        <button class="am-btn am-primary" ng-show="adminResubmitOrders.ordersSelected()" ng-click="adminResubmitOrders.submit()">Submit <i class="fa fa-send-o"></i></button>
+    </header>
+    <div am-padding-l="large">
+        <article id="ResubmitOrders" am-layout="aveda-panel">
+            <div am-block="table-block header gutter">
+                <div am-block="1" ng-if="application.$ocMedia('orientation:landscape')"></div>
+                <div am-block="2" ng-click="adminResubmitOrders.selectColumn('ID')">Order Number <span ng-if="application.$ocMedia('orientation:portrait')">& Type</span></div>
+                <div am-block="2" ng-click="adminResubmitOrders.selectColumn('Salon.Name')">Salon</div>
+                <div am-block="2" ng-if="application.$ocMedia('orientation:landscape')" ng-click="adminResubmitOrders.selectColumn('xp.PONumber')">PO Number</div>
+                <div am-block="2" ng-if="application.$ocMedia('orientation:landscape')" ng-click="adminResubmitOrders.selectColumn('xp.Four51OrderType')">Type</div>
+                <div am-block="1" ng-click="adminResubmitOrders.selectColumn('DateCreated')">Date Placed</div>
+                <div am-block="1" ng-if="application.$ocMedia('orientation:landscape')" ng-click="adminResubmitOrders.selectColumn('Total')">Amount</div>
+            </div>
+            <div am-block="table-block striped hover gutter" ng-repeat="order in adminResubmitOrders.orders | paginate:(adminCreditCards.currentPage-1) * 100 | limitTo:100 | orderBy:adminResubmitOrders.sortBy:adminResubmitOrders.reverseSort" ng-if="adminResubmitOrders.orders.length">
+                <div am-block="1" ng-if="application.$ocMedia('orientation:landscape')">
+                    <input type="checkbox" ng-model="order.Selected" />
+                </div>
+                <div am-block="2" ng-if="application.$ocMedia('orientation:landscape')">{{order.ID}}
+                    <span ng-if="application.$ocMedia('orientation:portrait')"><br/>{{order.xp.Four51OrderType | orderType:'Name'}}</span>
+                </div>
+                <div am-block="2">{{order.xp.Salon ? order.xp.Salon.Name + ' (' + (order.FromUserID | avedaSoldToID) + ')' : (order.FromUserID | avedaSoldToID)}}</div>
+                <div am-block="2" ng-if="application.$ocMedia('orientation:landscape')">{{order.xp.PONumber}}</div>
+                <div am-block="2" ng-if="application.$ocMedia('orientation:landscape')">{{order.xp.Four51OrderType | orderType:'Name'}}</div>
+                <div am-block="1">{{order.DateSubmitted || order.DateCreated | date}}</div>
+                <div am-block="1" ng-if="application.$ocMedia('orientation:landscape')">{{order.Total | currency}}</div>
+            </div>
+            <div am-padding class="am-text-c gray-text" ng-if="!adminResubmitOrders.orders.length && !adminResubmitOrders.searching">
+                No orders to show.
+            </div>
+        </article>
+        <div class="am-text-c">
+            <uib-pagination total-items="adminResubmitOrders.totalOrders" items-per-page="100" ng-model="adminResubmitOrders.currentPage" ng-change="adminResubmitOrders.selectPage()" max-size="7" class="pagination-sm" boundary-links="true" rotate="false"></uib-pagination>
+        </div>
+    </div>
+</article>

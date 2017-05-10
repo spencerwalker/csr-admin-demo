@@ -1,0 +1,64 @@
+.order-claim-category-options {
+  .tree-node {
+    background: @aveda-dark-blue;
+    color: #ffffff;
+  }
+  .sub-category {
+    background: @aveda-blue;
+  }
+  .tree-node-content {
+    padding:0.3em;
+    margin-bottom: 10px;
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    p:first-child {
+      padding-left:10px;
+    }
+    .am-btn {
+      padding:0.5em 1em;
+      font-weight:bold;
+    }
+    p,
+    .am-btn:not(:last-of-type) {
+      margin:0;
+      margin-right: 5px;
+    }
+    input[type='text'] {
+      color: #000;
+    }
+    .fa-caret-right,
+    .fa-caret-down {
+      padding:10px;
+      width:30px;
+      text-align:center;
+    }
+  }
+  ol li p {
+    font-weight: bold;
+  }
+}
+
+.claim-category {
+  form[name='newClaimCategoryForm'] {
+    margin-bottom: 25px;
+    button.am-secondary {
+      min-width: 160px;
+      padding-top: 12px;
+    }
+    ul {
+      li:first-of-type {
+        border-bottom: 1px solid @aveda-gray-text;
+      }
+    }
+    input[type='text'] {
+      color: #000;
+    }
+  }
+}
+
+.invalid-placeholder {
+  background: fade(@aveda-maroon, 15) ;
+  border: 2px dashed @aveda-maroon;
+}

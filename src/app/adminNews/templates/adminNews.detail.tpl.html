@@ -1,0 +1,51 @@
+<div am-padding-l="large" am-padding-p="top">
+	<section class="news-article" ng-if="!adminNewsDetail.editing">
+		<header class="aveda-detail-header" am-margin="bottom" am-padding="large">
+			<span>
+				<h3>{{adminNewsDetail.article.Title}}</h3>
+				<p>{{adminNewsDetail.article.Timestamp | date:'shortDate'}}</p>
+			</span>
+			<span>
+				<button type="button" class="am-btn" ui-sref="^" ui-sref-opts="{reload: true}"><i class="fa fa-arrow-left"></i> Back to List</button>
+				<button type="button" class="am-btn" ng-click="adminNewsDetail.delete()">Delete</button>
+				<button type="button" class="am-btn am-secondary" ng-click="adminNewsDetail.toggleEdit()"><i class="fa fa-edit"></i> {{adminNewsDetail.editing ? 'Cancel' : 'Edit'}}</button>
+			</span>
+		</header>
+		<div am-padding="large" ta-bind ng-model="adminNewsDetail.article.Body"></div>
+		<div am-padding-l="large" class="news-article-files">
+			<label>Files:</label><br />
+			<a ng-repeat="file in adminNewsDetail.article.Files" href="{{file.URL}}" target="_blank">{{file.DisplayName}}<br /></a>
+		</div>
+		<div class="assignment-summary" am-padding="large">
+			<i class="fa fa-eye"></i>
+			<span ng-if="adminNewsDetail.article.Assignments.AllUsers">All Users </span>
+			<span ng-if="!adminNewsDetail.article.Assignments.AllUsers && (adminNewsDetail.article.Assignments.Internal && adminNewsDetail.article.Assignments.External)">All Internal and External users</span>
+			<span ng-if="!adminNewsDetail.article.Assignments.AllUsers && (adminNewsDetail.article.Assignments.Internal && !adminNewsDetail.article.Assignments.External)">All Internal users</span>
+			<span ng-if="!adminNewsDetail.article.Assignments.AllUsers && (!adminNewsDetail.article.Assignments.Internal && adminNewsDetail.article.Assignments.External)">All External users</span>
+		<span ng-if="adminNewsDetail.article.Assignments.Regions"> in
+			<span ng-repeat="region in adminNewsDetail.article.Assignments.Regions"> <span class="aveda-pill small light-blue">{{region.Name}}</span>{{($last ? '' : ',')}}</span>
+		</span>
+		<span ng-if="adminNewsDetail.article.Assignments.SalonTypes"> in a
+			<span ng-repeat="type in adminNewsDetail.article.Assignments.SalonTypes"><span class="aveda-pill small green">{{type.Type}}</span>{{($last ? '' : ', ')}}</span>
+		</span>
+			<span>will see this article.</span>
+		</div>
+	</section>
+	<section ng-if="adminNewsDetail.editing">
+		<form name="saveNewsArticle" am-padding="large" ng-submit="adminNewsDetail.update()">
+			<fieldset am-layout="stack">
+				<div role="group">
+					<label>Title</label>
+					<input type="text" ng-model="adminNewsDetail.item.Title" ng-required="true"/>
+					<label>Body</label>
+					<text-angular  ng-model="adminNewsDetail.item.Body"></text-angular>
+					<label>Select Files</label>
+					<avedamultifileupload extensions="pdf, xls, xlsx, ppt, pptx, doc, docx" object="adminNewsDetail.item"></avedamultifileupload>
+					<!--<textarea type="text" ng-model="adminNewsDetail.item.Article.Body" ng-required="true"></textarea>-->
+					<button type="button" class="am-btn" ng-click="adminNewsDetail.toggleEdit()">Cancel</button>
+					<button type="submit" class="am-btn am-primary" ng-disabled="saveNewsArticle.$invalid">Publish</button>
+				</div>
+			</fieldset>
+		</form>
+	</section>
+</div>

@@ -1,0 +1,27 @@
+<header class="aveda-blue-header">
+	<h3>Aveda News</h3>
+	<button class="am-btn am-primary" ui-sref="base.adminNews.create"><i class="fa fa-plus-circle"></i> News Article</button>
+</header>
+<div am-padding-l="large">
+	<section class="news-summary" ng-repeat="(id, article) in adminNewsList.articles | orderObjectBy:'-Article.Timestamp'">
+		<header am-padding ui-sref=".detail({id: article.id})">
+			<h4>{{article.Title}}</h4>
+			<p>{{article.Timestamp | date:'shortDate'}}</p>
+		</header>
+		<button type="button" class="am-btn am-secondary" ui-sref=".detail({id: article.id, editing:true})">Edit</button>
+		<div class="assignment-summary" am-padding>
+			<i class="fa fa-eye"></i>
+			<span ng-if="article.Assignments.AllUsers">All Users </span>
+			<span ng-if="!article.Assignments.AllUsers && (article.Assignments.Internal && article.Assignments.External)">All Internal and External users</span>
+			<span ng-if="!article.Assignments.AllUsers && (article.Assignments.Internal && !article.Assignments.External)">All Internal users</span>
+			<span ng-if="!article.Assignments.AllUsers && (!article.Assignments.Internal && article.Assignments.External)">All External users</span>
+		<span ng-if="article.Assignments.Regions"> in
+			<span ng-repeat="region in article.Assignments.Regions"> <span class="aveda-pill small light-blue">{{region.Name}}</span>{{($last ? '' : ',')}}</span>
+		</span>
+		<span ng-if="article.Assignments.SalonTypes"> in a
+			<span ng-repeat="type in article.Assignments.SalonTypes"><span class="aveda-pill small green">{{type.Type}}</span>{{($last ? '' : ', ')}}</span>
+		</span>
+			<span>will see this article.</span>
+		</div>
+	</section>
+</div>

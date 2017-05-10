@@ -1,0 +1,392 @@
+// Cursor Reset
+// https://gist.github.com/murtaugh/5247154
+html,
+body {
+  cursor: default;
+}
+
+code {
+  cursor: text;
+}
+
+/*
+textarea and input[type="text"] already receive
+"cursor: text" via browsers' base stylesheets
+*/
+
+a,
+label,
+button,
+input[type="radio"],
+input[type="submit"],
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+
+/**
+ *
+ * =======================================================================
+  Typography inspired by Typeplate
+  URL ........... http://typeplate.com
+  VERSION ....... 2.1.0
+
+ * =======================================================================
+ *
+
+// Typeplate is a “typographic starter kit”. We don’t make aesthetic design choices, but define proper markup with extensible styling for common typographic patterns. A stripped-down Sass or CSS library of your choosing primarily concerned with the appropriate technical implementation of design patterns—not how they look.
+// https://github.com/typeplate/typeplate.github.io
+
+// Make use of Typeplate alongside ambient variables
+
+/**
+ *
+ * =======================================================================
+   Base Type
+ * =======================================================================
+ *
+ */
+
+html {
+//  font: normal 112.5%/1.65 serif; /* base font size 18px with 1.65 line-height */
+// noted: http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/
+  font: normal @am-root-font-size/@am-root-line-height serif;
+}
+body {
+//  -webkit-hyphens: auto;
+//  -moz-hyphens: auto;
+//  -ms-hyphens: auto;
+//  hyphens: auto;
+  word-wrap: break-word;
+//  color: #444444;
+  color: @am-clr-body;
+}
+
+/**
+ *
+ * =======================================================================
+   Fine Print
+ * =======================================================================
+ */
+
+small {
+  font-size: 65%;
+}
+
+/**
+ *
+ * =======================================================================
+   Headings
+ * =======================================================================
+ */
+
+// Agree::: Do NOT use heading as sub titles
+// http://stackoverflow.com/questions/3910419/semantic-structure-in-html-subtitles-pre-html5
+// http://stackoverflow.com/questions/22444118/correct-markup-for-headers/22451639#22451639
+// % root font size + rem element font sizes + em for margins + padding
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1;
+  margin-top: 0;
+  text-rendering: optimizeLegibility; /*  voodoo to enable ligatures and kerning | https://developer.mozilla.org/en-US/docs/CSS/text-rendering */
+//  color: #222222;
+  color: @am-clr-heading;
+}
+/*  base font-size * base line-height = current font-size */
+h1 {
+  font-size: 60px;
+  font-size: 3.33333rem; /* 60 / 18 = 3.3333 */
+  margin-bottom: 8.91px;
+  margin-bottom: 0.495rem;
+}
+h2 {
+  font-size: 48px;
+  font-size: 2.6667rem; /* 48 / 18 = 2.6667 */
+  margin-bottom: 11.1375px;
+  margin-bottom: 0.61875rem;
+}
+h3 {
+  font-size: 36px;
+  font-size: 2rem; /* 36 / 18 = 2 */
+  margin-bottom: 14.85px;
+  margin-bottom: 0.825rem;
+}
+h4 {
+  font-size: 24px;
+  font-size: 1.3333333333333333rem; /* 24 / 18 = 1.3333  */
+  margin-bottom: 22.275px;
+  margin-bottom: 1.2375rem;
+}
+h5 {
+  font-size: 21px;
+  font-size: 1.16667rem; /* 21 / 18 = 1.1667 */
+  margin-bottom: 25.45714px;
+  margin-bottom: 1.41429rem;
+}
+h6 {
+  font-size: 18px;
+  font-size: 1rem; /* 18 = 18 × 1 */
+  margin-bottom: 29.7px;
+  margin-bottom: 1.65rem;
+}
+
+/**
+ *
+ * =======================================================================
+   Paragraphs and Indentation
+ * =======================================================================
+ */
+
+p {
+  margin: auto auto 1.5em; /* bottom margin for paragraphs */
+}
+
+//p + p {
+//  text-indent: 1.5em; /* indent subsequent paragraphs */
+//  margin-top: -1.5em; /* no top margin on subsequent paragraphs */
+//}
+
+/**
+ *
+ * =======================================================================
+   Hyphens
+ * =======================================================================
+ */
+
+input,
+abbr,
+acronym,
+blockquote,
+code,
+kbd,
+q,
+samp,
+var {
+  // Accepted values: [ none | manual | auto ] */ /* http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/**
+ *
+ * =======================================================================
+   Code Blocks
+ * =======================================================================
+ */
+
+pre code {
+  word-wrap: normal;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
+
+pre {
+  white-space: pre;
+}
+
+code {
+//  white-space: pre;
+  font-family: monospace;
+}
+
+/**
+ *
+ * =======================================================================
+ * Abbreviations Markup
+ * Extend this object into your markup
+  <abbr title="hyper text markup language">HMTL</abbr>
+ * Extend this object into your markup.
+ * =======================================================================
+ */
+
+abbr {
+  -webkit-font-variant: small-caps;
+  -moz-font-variant: small-caps;
+  -ms-font-variant: small-caps;
+  font-variant: small-caps;
+  font-weight: 600;
+  text-transform: lowercase;
+  color: gray;
+}
+
+abbr[title]:hover {
+  cursor: help; /* cursor changed to a question mark when it has a title */
+}
+
+/**
+ *
+ * =======================================================================
+   Definition Lists
+ * =======================================================================
+ */
+
+dt,
+dd {
+  display: inline;
+  margin: 0;
+}
+dt + dt:before,
+dd + dt:before {
+  content: "\A"; // line break
+  white-space: pre;
+}
+dd + dd:before {
+  content: ", ";
+}
+dd:before {
+  content: ": ";
+  margin-left: -0.2em;
+}
+
+/**
+ *
+ * =======================================================================
+   Blockquotes
+ * =======================================================================
+ */
+
+blockquote + figcaption {
+  display: block;
+  font-size: inherit;
+  text-align: right;
+}
+
+blockquote + figcaption:before {
+  content: "-"; /* "-" is your citation flourish */
+}
+
+// **
+// * =======================================================================
+// Ambient additions to Typeplate
+// * =======================================================================
+// **
+
+body {
+  background-color: @am-clr-body-bg;
+  font-weight: 400;
+  font-family: "HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+  & > header,
+  & > footer {
+    background-color: @am-clr-closure-bg;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 300;
+}
+
+a {
+  color: @am-clr-link;
+  &:hover,
+  &:active,  {
+    color:darken(@am-clr-link, 50%);
+  }
+  // agree: http://outlinenone.com/
+  &:focus:not(.@{am-prefix}-btn) {
+    background-color: @am-clr-link-focus-bg;
+    color: @am-clr-link-focus;
+  }
+}
+
+blockquote {
+  border-left: 5px solid @am-clr-primary;
+  background-color: #fafafa;
+  margin: 1em 0;
+  padding: .5em 1em;
+  font-size: small;
+  width: 100%;
+  &:before,
+  &:after {
+    content: "";
+  }
+  & > h1,
+  & > h2 ,
+  & > h3,
+  & > h4,
+  & > h5,
+  & > h6 {
+    color: @am-clr-primary;
+  }
+}
+
+pre {
+  width: 100%;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  color: #333;
+  display: block;
+  font-size: 13px;
+  line-height: 1.42857;
+  word-wrap: break-word;
+  tab-size: 4;
+  margin: .5em 0 0 0;
+  padding: 1em 1em 1em 1em;
+}
+
+code {
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  color: #c7254e;
+  font-weight: normal;
+  font-size: 90%;
+  padding: 2px 4px;
+}
+
+label {
+  font-size: 80%;
+  font-weight: 700;
+}
+input,
+select,
+textarea {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+hr {
+  border-color: @am-clr-hr;
+  border-width: 1px 0 0;
+}
+
+img {
+  display: block;
+  height: auto;
+}
+
+kbd,
+pre,
+samp {
+  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+
+
+figure {
+  margin: .5em 0;
+}
+
+@media (orientation:portrait){
+  html {
+    font-size: 90%;
+  }
+}
+
+@media (max-width: 30em){
+  html {
+    font-size: 80%;
+  }
+}

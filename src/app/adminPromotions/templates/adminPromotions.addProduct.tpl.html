@@ -1,0 +1,37 @@
+<header class="aveda-blue-header">
+	<h3>Promotional Product	</h3>
+	<i class="fa fa-3x green-text fa-times" ng-click="promotionAddProduct.close()"></i>
+</header>
+<form name="addPromotionalProduct" am-layout="vertical" am-padding-l="large" am-padding-p="small" ng-submit="promotionAddProduct.submit()">
+	<fieldset am-layout="stack">
+		<div role="group">
+			<label class="visuallyhidden">Find a product</label>
+			<input type="search" placeholder="Find a product..."
+				   ng-model="promotionAddProduct.searchTerm"
+				   typeahead-append-to-body="true"
+				   typeahead-wait-ms="500"
+				   typeahead-focus-first="false"
+				   typeahead-min-length="3"
+				   typeahead-loading="promotionAddProduct.loadingSearch"
+				   typeahead="product as product.Name for product in promotionAddProduct.searchProducts($viewValue)"
+				   typeahead-template-url="adminProducts/templates/adminProducts.productSearch.tpl.html"
+				   typeahead-on-select="promotionAddProduct.productSearchSelect($item)" autofocus/>
+			<i ng-show="promotionAddProduct.loadingSearch" class="fa fa-circle-o-notch fa-spin"></i>
+		</div>
+	</fieldset>
+	<fieldset am-layout="align" ng-show="promotionAddProduct.SelectedProduct">
+		<div role="group">
+			<span>
+			<label>Quantity within Promotion:</label>
+			<input type="number" min="1" ng-model="promotionAddProduct.promoObj.Quantity" ng-required="true"/>
+			</span>
+			<span>
+			<label>
+				<input type="checkbox" ng-model="promotionAddProduct.promoObj.Free"/> Is this a free product?
+			</label>
+			</span>
+			<hr/>
+			<button type="submit" class="am-btn am-primary" ng-disabled="addPromotionalProduct.$invalid">Confirm</button>
+		</div>
+	</fieldset>
+</form>

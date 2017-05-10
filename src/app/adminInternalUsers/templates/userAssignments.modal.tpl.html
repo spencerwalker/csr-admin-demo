@@ -1,0 +1,33 @@
+<header class="aveda-blue-header" ng-if="!assignmentsModal.salonAssignmentsLoading">
+    <h3><span class="aveda-green">Editing Assignments</span></h3>
+</header>
+
+<form name="editCustomerGroupAssignments" am-layout="vertical" am-padding ng-if="!assignmentsModal.salonAssignmentsLoading">
+    <fieldset am-layout>
+        <div role="group toolbar">
+            <label class="visuallyhidden">Search</label>
+            <input type="search" placeholder="Search..."
+                   ng-model="assignmentsModal.searchTerm"
+                   typeahead-append-to-body="true"
+                   typeahead-template-url="adminInternalUsers/templates/customerGroup.search.result.tpl.html"
+                   typeahead="group as group.Name for group in assignmentsModal.searchCustomerGroup($viewValue)"
+                   typeahead-on-select="assignmentsModal.selectSalon($item)" autofocus/>
+            <!--typeahead-template-url="base/templates/base.search.products.tpl.html"--></div>
+    </fieldset>
+    <hr/>
+    <fieldset am-layout>
+        <div>
+            <div id="AssignedSalonGroup41s" role="group" class="item-summary" ng-repeat="salon in assignmentsModal.selectedSalonGroups | paginate:(assignmentsModal.currentSalonGroupPage-1) * 10 | limitTo:10">
+                <h4>
+                    {{salon.Name}}<br/>
+                    <small>{{salon.ID | avedaSoldToID}}</small>
+                </h4>
+                <button class="am-btn am-secondary" ng-click="assignmentsModal.removeSalon(salon)"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="am-text-c" ng-if="assignmentsModal.selectedSalonGroups.length > 10">
+                <uib-pagination total-items="assignmentsModal.selectedSalonGroups.length" items-per-page="10" ng-model="assignmentsModal.currentSalonGroupPage" max-size="5" class="pagination-sm" boundary-links="true" rotate="false"></uib-pagination>
+            </div>
+        </div>
+    </fieldset>
+    <button type="button" class="am-btn am-primary" ng-click="assignmentsModal.close()">Done</button>
+</form>

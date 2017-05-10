@@ -1,0 +1,30 @@
+<header class="aveda-blue-header">
+    <h3>New Admin User</h3>
+</header>
+<form name="createNewUser" am-layout="horizontal" am-padding-l="large" am-padding-p="small" ng-submit="adminCreateAdminUsers.createNewUser()" autocomplete="off">
+    <fieldset am-layout="stack">
+        <div role="group" am-block="gutter">
+            <div am-block="6">
+                <label>First Name</label>
+                <input type="text" name="FirstName" ng-model="adminCreateAdminUsers.newUser.FirstName" ng-required="true" autocomplete="off" />
+            </div>
+            <div am-block="6">
+                <label>Last Name</label>
+                <input type="text" name="LastName" ng-model="adminCreateAdminUsers.newUser.LastName" ng-required="true" autocomplete="off" />
+            </div>
+        </div>
+        <div role="group">
+            <label>Username</label>
+            <input type="text" name="Username" ng-model="adminCreateAdminUsers.newUser.Username" ng-required="true" autocomplete="off" />
+            <label>Password <i class="fa fa-check" ng-show="adminCreateAdminUsers.newUser.Password && adminCreateAdminUsers.newUser.ConfirmPassword"></i></label>
+            <input type="password" name="Password" ng-model="adminCreateAdminUsers.newUser.Password" ng-required="true" autocomplete="off" />
+            <label>Confirm Password  <i class="fa" ng-class="{'fa-check': (adminCreateAdminUsers.newUser.Password == adminCreateAdminUsers.newUser.ConfirmPassword), 'fa-times': (adminCreateAdminUsers.newUser.Password != adminCreateAdminUsers.newUser.ConfirmPassword)}" ng-show="adminCreateAdminUsers.newUser.Password && adminCreateAdminUsers.newUser.ConfirmPassword"></i></label>
+            <input type="password" name="ConfirmPassword" ng-model="adminCreateAdminUsers.newUser.ConfirmPassword" ng-required="true" autocomplete="off" />
+            <label>Email</label>
+            <input type="email" name="Email" ng-model="adminCreateAdminUsers.newUser.Email" ng-required="true" autocomplete="off" ng-pattern="/^.*(?=.{8,})((?=.*\d)(?=.*[a-zA-Z])|(?=.*\W)(?=.*[a-zA-Z])|(?=.*\d)(?=.*\W)).*$/" />
+        </div>
+        <button type="button" class="am-btn" ui-sref="base.adminAdminUsers">Cancel</button>
+        <button type="submit" ng-disabled="createNewUser.$invalid || (adminCreateAdminUsers.newUser.Password != adminCreateAdminUsers.newUser.ConfirmPassword)" class="am-btn am-primary">Save</button>
+        <div ng-show="adminCreateAdminUsers.errorMessage">{{adminCreateAdminUsers.errorMessage}}</div>
+    </fieldset>
+</form>

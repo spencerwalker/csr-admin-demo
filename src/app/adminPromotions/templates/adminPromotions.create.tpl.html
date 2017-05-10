@@ -1,0 +1,78 @@
+<header class="aveda-blue-header">
+	<h3>New Promotion</h3>
+</header>
+<section>
+	<form name="newPromotionForm" am-layout="vertical" ng-submit="adminPromotionsCreate.createPromotion()">
+		<fieldset am-layout="stack">
+			<div role="group" am-padding-l="large" am-padding-p="small">
+				<label>Promotion Title:</label>
+				<input type="text" ng-model="adminPromotionsCreate.newPromotion.Name" ng-required="true"/>
+				<label>Description:</label>
+				<text-angular ng-model="adminPromotionsCreate.newPromotion.Description" ng-required="true"></text-angular>
+				<label>Downloadable Files</label>
+				<avedamultifileupload extensions="pdf, xls, xlsx, ppt, pptx, doc, docx" object="adminPromotionsCreate.newPromotion.xp"></avedamultifileupload>
+				<label>Background Image</label>
+				<avedafileupload extensions="jpg, jpeg, gif, png" object="adminPromotionsCreate.newPromotion"></avedafileupload>
+				<label>Collective Number:</label>
+				<input type="text" ng-model="adminPromotionsCreate.newPromotion.xp.CollectiveNumber" ng-required="true" ng-pattern="/^[a-zA-Z0-9]+$/" ng-maxlength="10" />
+				<label>
+					<input type="checkbox" ng-model="adminPromotionsCreate.newPromotion.xp.FreeShipping"/>
+					Free Shipping
+				</label>
+				<label>
+					<input type="checkbox" ng-model="adminPromotionsCreate.newPromotion.xp.LaunchPromotion"/>
+					Launch Promotion
+				</label>
+				<label>Start Date</label>
+				<div role="toolbar" ng-hide="application.$ocMedia('orientation:portrait')">
+					<button class="am-btn" ng-click="adminPromotionsCreate.openDatepicker($event, 'startDatePickerStatus')"><i class="fa fa-calendar"></i></button>
+					<input type="text" datepicker-popup="shortDate" is-open="adminPromotionsCreate.startDatePickerStatus" ng-model="adminPromotionsCreate.newPromotion.xp.StartDate" ng-change="adminPromotionsCreate.dateChange()" max-date="adminPromotionsCreate.maxDate" ng-required="true"/>
+				</div>
+				<input type="date" ng-model="adminPromotionsCreate.newPromotion.xp.StartDate" ng-show="application.$ocMedia('orientation:portrait')" ng-required="true"/>
+				<label>End Date</label>
+				<div role="toolbar" ng-hide="application.$ocMedia('orientation:portrait')">
+					<button class="am-btn" ng-click="adminPromotionsCreate.openDatepicker($event, 'endDatePickerStatus')" ng-hide="application.$ocMedia('orientation:portrait')"><i class="fa fa-calendar"></i></button>
+					<input type="text" datepicker-popup="shortDate" is-open="adminPromotionsCreate.endDatePickerStatus" ng-model="adminPromotionsCreate.newPromotion.xp.EndDate" ng-change="adminPromotionsCreate.dateChange()" min-date="adminPromotionsCreate.minDate" ng-required="true" />
+				</div>
+				<input type="date" ng-model="adminPromotionsCreate.newPromotion.xp.EndDate" ng-show="application.$ocMedia('orientation:portrait')" ng-required="true"/>
+			</div>
+		</fieldset>
+		<div am-padding-l="large" am-padding-p="small">
+			<button type="submit" class="am-btn am-primary" ng-disabled="newPromotionForm.$invalid || !adminPromotionsCreate.selectedProducts.length">Save Promotion</button>
+			<button type="button" class="am-btn am-secondary" ng-click="adminPromotionsCreate.editPromotionAssignment()"><i class="fa fa-cog"></i> Edit Assignments</button>
+			<button type="button" class="am-btn am-secondary" ui-sref="base.adminPromotions">Cancel</button>
+		</div>
+	</form>
+</section>
+<section am-padding-l="large">
+	<table am-layout="aveda-table" class="promotions-products-table">
+		<thead>
+		<tr class="panel-header">
+			<th colspan="3">Products in this promotion</th>
+			<th colspan="2"><button type="button" class="am-btn am-secondary" ng-click="adminPromotionsCreate.addProduct()"><i class="fa fa-plus-circle"></i> Add a Product</button></th>
+		</tr>
+		<tr ng-if="adminPromotionsCreate.selectedProducts.length">
+			<th>Product Name</th>
+			<th>Product ID</th>
+			<th>Quantity</th>
+			<th>Cost</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="item in adminPromotionsCreate.selectedProducts track by $index">
+			<td>{{item.FullProduct.Name}}</td>
+			<td><b>{{item.FullProduct.ID}}</b></td>
+			<td>{{item.Quantity}}</td>
+			<td>{{item.Free ? 'FREE' : 'Regularly priced'}}</td>
+			<td><button class="am-btn am-secondary" ng-click="adminPromotionsCreate.removeProduct($index)">Remove</button></td>
+		</tr>
+		<tr ng-if="!adminPromotionsCreate.selectedProducts.length">
+			<td colspan="5" class="am-text-c">
+				There are no products assigned to this promotion.
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</section>
+

@@ -1,0 +1,115 @@
+<article id="Login">
+	<section class="am-text-c" am-padding="large">
+		<aveda-logo data-color="#FFF"></aveda-logo>
+	</section>
+	<section am-layout="vertical" class="am-text-c" am-padding="large">
+		<h3 class="text-center" ng-show="login.form ==='login'">Login to your account</h3>
+        <h3 class="text-center" ng-show="login.form ==='forgot'">Forgot your password?</h3>
+
+		<nav am-layout="horizontal" ng-show="login.form ==='login' || login.form ==='forgot'">
+			<a href="" ng-click="login.setForm('login')" ng-class="{active:login.form == 'login'}">LOGIN</a>
+			<a href="" ng-click="login.setForm('forgot')" ng-class="{active:login.form == 'forgot'}" ng-disabled="true">FORGOT PASSWORD?</a> <!-- TODO: Aveda UAT change-->
+		</nav>
+		<hr/>
+		<div ng-switch="login.form">
+			<form name="login_form" am-layout="vertical" ng-submit="login.submit(login.credentials)" ng-switch-when="login" ng-show="!login.resetPasswordToken">
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="Username" class="visuallyhidden">Username</label>
+						<input id="Username" type="text" name="Username" placeholder="Username" ng-model="login.credentials.Username" ng-required="true"/>
+						<i class="fa fa-user"></i>
+					</div>
+				</fieldset>
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="Password" class="visuallyhidden">Password</label>
+						<input id="Password" type="password" name="Password" placeholder="Password" ng-model="login.credentials.Password" ng-required="true"/>
+						<i class="fa fa-lock"></i>
+					</div>
+				</fieldset>
+				<fieldset am-layout>
+					<button class="am-btn am-primary" type="submit" ng-disabled="login_form.$invalid">Login</button>
+					<div ng-show="login.errorMessage">{{login.errorMessage}}</div>
+				</fieldset>
+			</form>
+			<form name="resetPasswordForm" am-layout="vertical" ng-submit="login.resetPassword(login.resetPasswordCredentials)" ng-show="login.resetPasswordToken">
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="Username" class="visuallyhidden">Username</label>
+						<input id="Username" type="text" name="Username" placeholder="Username" ng-model="login.resetPasswordCredentials.Username" ng-required="true"/>
+						<i class="fa fa-user"></i>
+					</div>
+				</fieldset>
+				<blockquote>
+					<ul>
+						<li>Minimum of 8 alphanumeric characters.</li>
+						<li>Two or more of the following kinds of characters</li>
+						<ol>
+							<li>Alphabetic (e.g., a-z, A-Z)</li>
+							<li>Numeric (i.e. 0-9)</li>
+							<li>Punctuation and other characters (e.g., !@#$%^&amp;*()_+|~-=\`{}[]:";'&lt;&gt;?,./)</li>
+						</ol>
+					</ul>
+				</blockquote>
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="ResetPassword" class="visuallyhidden">Password</label>
+						<input id="ResetPassword" type="password" name="ResetPassword" placeholder="Password" ng-model="login.resetPasswordCredentials.Password" ng-required="true" ng-pattern="/^.*(?=.{8,})((?=.*\d)(?=.*[a-zA-Z])|(?=.*\W)(?=.*[a-zA-Z])|(?=.*\d)(?=.*\W)).*$/"/>
+						<i class="fa fa-lock"></i><i class="fa fa-check" ng-show="resetPasswordForm.ResetPassword.$valid"></i>
+					</div>
+				</fieldset>
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="ConfirmResetPassword" class="visuallyhidden">Confirm Password</label>
+						<input id="ConfirmResetPassword" type="password" name="ConfirmResetPassword" placeholder="Confirm Password" ng-model="login.resetPasswordCredentials.ConfirmPassword" ng-required="true" ng-pattern="/^.*(?=.{8,})((?=.*\d)(?=.*[a-zA-Z])|(?=.*\W)(?=.*[a-zA-Z])|(?=.*\d)(?=.*\W)).*$/"/>
+						<i class="fa fa-lock"></i><i class="fa fa-check" ng-show="resetPasswordForm.ConfirmResetPassword.$valid && login.resetPasswordCredentials.ConfirmPassword == login.resetPasswordCredentials.Password"></i>
+					</div>
+				</fieldset>
+				<fieldset am-layout>
+					<button class="am-btn am-primary" type="submit" ng-disabled="resetPasswordForm.$invalid || login.resetPasswordCredentials.Password != login.resetPasswordCredentials.ConfirmPassword">Submit</button>
+				</fieldset>
+			</form>
+			<form name="forgot_password" ng-switch-when="forgot" ng-submit="login.forgotPassword(login.forgotPasswordEmail)">
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="Email" class="visuallyhidden">Email</label>
+						<input id="Email" type="text" name="Email" placeholder="Email" ng-model="login.forgotPasswordEmail" ng-required="true"/>
+						<i class="fa fa-envelope"></i>
+						<div ng-show="login.forgotPasswordMessage">{{login.forgotPasswordMessage}}</div>
+						<button class="am-btn am-primary" type="submit" ng-disabled="forgot_password.$invalid">Submit</button>
+					</div>
+				</fieldset>
+			</form>
+			<form ng-switch-when="resetSuccess">
+				<div class="alert alert-success text-center">Your password has been reset.</div>
+				<div class="text-center">
+					<a id="back_to_login2" ng-click="login.setForm('login')">Back to Login</a>
+				</div>
+			</form>
+            <form name="ResetPasswordForm" am-layout="vertical" ng-switch-when="resetByToken" ng-submit="login.resetPasswordByToken()">
+				<h3 class="text-center">Reset Password</h3>
+				<div class="reset-password-alert">
+					Due to a change in how we store password information, <br>as of <b>TBD</b> you must reset your password. <br> You can use the same password as before.
+				</div>
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="NewPassword" class="visuallyhidden">New Password</label>
+						<input type="password" id="NewPassword" name="NewPassword" placeholder="New Password" ng-model="login.credentials.NewPassword" ng-required="true" autofocus/>
+						<i class="fa fa-lock"></i>
+					</div>
+				<fieldset am-layout="overlayed">
+					<div role="group">
+						<label for="ConfirmPassword" class="visuallyhidden">Confirm Password</label>
+						<input type="password" id="ConfirmPassword" placeholder="Confirm New Password" ng-model="login.credentials.ConfirmPassword" ng-required="true" />
+						<i class="fa fa-lock"></i>
+					</div>
+				</fieldset>
+				<fieldset am-layout="overlayed">
+					<button type="submit" id="reset_submit" class="am-btn am-primary" ng-disabled="ResetPasswordForm.$invalid || login.credentials.NewPassword != login.credentials.ConfirmPassword">Submit</button>
+				</fieldset>
+            </form>
+			
+		</div>
+	</section>
+</article>
+

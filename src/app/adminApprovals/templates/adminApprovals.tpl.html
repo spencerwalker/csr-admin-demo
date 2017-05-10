@@ -1,0 +1,31 @@
+<article am-layout="vertical">
+	<header class="aveda-blue-header">
+		<h3>Approval Rules</h3>
+	</header>
+	<div am-padding-l="large">
+		<h4>Finance and Holiday/Launch Approval Rules</h4>
+		<section class="item-summary" ng-repeat="rule in adminApprovals.financeHolidayLaunchRules">
+			<h5>{{rule.ApprovingGroup.Name | avedaApprovalRule:'FinanceHolidayLaunch'}}<br/>
+				<small>{{rule.ApprovingGroup.Description}}</small>
+			</h5>
+			<button ng-if="rule.ApprovingGroup.Members.length" type="button" class="am-btn am-secondary" ng-click="adminApprovals.editApproval(rule)"><i class="fa fa-edit"></i> Edit</button>
+			<button ng-if="!rule.ApprovingGroup.Members.length" type="button" class="am-btn am-secondary" ng-click="adminApprovals.editApproval(rule)"><i class="fa fa-plus-circle"></i> Create</button>
+		</section>
+		<h4>Customized Marketing Order Approval Rules <button class="am-btn am-secondary" ng-if="adminApprovals.customizedMarketingRules.length" ng-click="adminApprovals.generateCMRules()"><i class="fa fa-refresh"></i></button></h4>
+		<section class="item-summary" ng-repeat="rule in adminApprovals.customizedMarketingRules">
+			<h5>{{rule.ApprovingGroup.Name | avedaApprovalRule:'CM'}}<br/>
+				<small>{{rule.ApprovingGroup.Description}}</small>
+			</h5>
+			<button ng-if="rule.ApprovingGroup.Members.length" type="button" class="am-btn am-secondary" ng-click="adminApprovals.editApproval(rule)"><i class="fa fa-edit"></i> Edit</button>
+			<button ng-if="!rule.ApprovingGroup.Members.length" type="button" class="am-btn am-secondary" ng-click="adminApprovals.editApproval(rule)"><i class="fa fa-plus-circle"></i> Create</button>
+		</section>
+		<h4>Cost Center Approval Rules</h4>
+		<section class="item-summary" ng-repeat="rule in adminApprovals.costCenterRules | removeDuplicates">
+			<h5>{{rule.ApprovingGroup.Name | avedaApprovalRule:'CostCenter'}}<br/>
+				<small>{{rule.ApprovingGroup.Description}}</small>
+			</h5>
+			<button ng-if="rule.ApprovingGroup.Members.length" type="button" class="am-btn am-secondary" ng-click="adminApprovals.editApproval(rule)"><i class="fa fa-edit"></i> Edit</button>
+			<button ng-if="!rule.ApprovingGroup.Members.length" type="button" class="am-btn am-secondary" ng-click="adminApprovals.editApproval(rule)"><i class="fa fa-plus-circle"></i> Create</button>
+		</section>
+	</div>
+</article>

@@ -1,0 +1,51 @@
+<header class="aveda-blue-header">
+    <h3><span class="green-text">Editing: </span> {{adminEditInternalUser.user.FirstName + ' ' + adminEditInternalUser.user.LastName + ', '}}
+        <span ng-show="adminEditInternalUser.accessLevel == 'CSR'"> CSR</span>
+        <span ng-show="adminEditInternalUser.accessLevel == 'RegionVP'"> Region VP</span>
+        <span ng-show="adminEditInternalUser.accessLevel == 'POD'"> POD Director</span>
+        <span ng-show="adminEditInternalUser.accessLevel == 'SDP'"> Sales Person</span>
+        <span ng-show="adminEditInternalUser.accessLevel == 'Custom'"> Aveda User</span>
+    </h3>
+</header>
+<form name="editInternalUser" am-layout="horizontal" am-padding-l="large" am-padding-p="small" ng-submit="adminEditInternalUser.updateUser()" autocomplete="off">
+    <fieldset am-layout="stack">
+        <div role="group" am-block="gutter" ng-if="adminCreateInternalUsers.accessLevel != 'SDP'">
+            <div am-block="6">
+                <label>First Name</label>
+                <input type="text" name="FirstName" ng-model="adminEditInternalUser.user.FirstName" ng-required="true" autocomplete="off" ng-disabled="adminEditInternalUser.user.xp.AccessLevel == 'SDP'" />
+            </div>
+            <div am-block="6">
+                <label>Last Name</label>
+                <input type="text" name="LastName" ng-model="adminEditInternalUser.user.LastName" ng-required="true" autocomplete="off" ng-disabled="adminEditInternalUser.user.xp.AccessLevel == 'SDP'" />
+            </div>
+        </div>
+        <div role="group">
+            <label>Username</label>
+            <input type="text" name="Username" ng-model="adminEditInternalUser.user.Username" ng-required="true" autocomplete="off" />
+            <label>Email</label>
+            <input type="email" name="Email" ng-model="adminEditInternalUser.user.Email" ng-required="true" autocomplete="off" ng-pattern="/^.*(?=.{8,})((?=.*\d)(?=.*[a-zA-Z])|(?=.*\W)(?=.*[a-zA-Z])|(?=.*\d)(?=.*\W)).*$/" />
+            <label>Phone</label>
+            <input type="tel" name="Phone" ng-model="adminEditInternalUser.user.Phone" autocomplete="off" />
+        </div>
+        <div role="group" ng-show="adminEditInternalUser.accessLevel == 'CSR'">
+            <label>
+                <input type="checkbox" ng-model="adminEditInternalUser.user.xp.AssignToClaims" />
+                Allow CSR to be assigned to Claims
+            </label>
+        </div>
+        <div role="group" ng-show="adminEditInternalUser.accessLevel == 'RegionVP'">
+            <label>Region Assignment</label>
+            <select name="RegionAssignment" multiple ng-multiple="true" ng-model="adminEditInternalUser.user.Regions" ng-options="region as region.Name for region in adminEditInternalUser.accessLevelData track by region.ID"></select>
+        </div>
+        <div role="group" ng-show="adminEditInternalUser.accessLevel == 'POD'">
+            <label>POD Assignment</label>
+            <select name="PODAssignment" multiple ng-multiple="true" ng-model="adminEditInternalUser.user.PODs" ng-options="pod as pod.Name for pod in adminEditInternalUser.accessLevelData track by pod.ID"></select>
+        </div>
+        <button type="button" class="am-btn" ui-sref="base.adminInternalUsers({accessLevel:adminEditInternalUser.accessLevel})">Cancel</button>
+        <button type="button" class="am-btn am-danger" ng-click="adminEditInternalUser.deleteUser()">Delete</button>
+        <button type="button" class="am-btn" ng-click="adminEditInternalUser.openPermissions()"><i class="fa fa-cog"></i> Edit Permissions</button>
+        <button type="button" class="am-btn" ng-click="adminEditInternalUser.editCustomAssignments()" ng-if="adminEditInternalUser.user.CanEditAssignments"><i class="fa fa-cog"></i> Edit Assignments</button>
+        <button type="submit" class="am-btn am-primary" ng-disabled="editInternalUser.$invalid">Save</button>
+        <div ng-show="adminEditInternalUser.errorMessage">{{adminEditInternalUser.errorMessage}}</div>
+    </fieldset>
+</form>

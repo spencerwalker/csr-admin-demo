@@ -1,0 +1,24 @@
+<article am-layout="horizontal">
+    <header class="aveda-blue-header">
+        <h3>Administer Cost Centers</h3>
+        <!--<button class="am-btn am-primary" ng-click="adminCostCentersList.createNew()"><i class="fa fa-plus-circle"></i> Create New</button>-->
+        <div role="dropdown" dropdown dropdown-append-to-body>
+            <button class="am-btn am-primary" dropdown-toggle>Create New<i class="fa fa-caret-up"></i></button>
+            <ul dropdown-menu>
+                <li ng-click="adminCostCentersList.createNew('Internal')">Internal</li>
+                <li ng-click="adminCostCentersList.createNew('External')">External</li>
+            </ul>
+        </div>
+    </header>
+    <div am-padding-l="large">
+        <section class="item-summary" ng-repeat="costCenter in adminCostCentersList.costCenters | avedaCostCenters">
+            <h4>
+                {{costCenter.Name | avedaCostCenterName}} <br/>
+                <small>{{costCenter.Description}}</small>
+            </h4>
+            <button type="button" class="am-btn am-secondary" ng-click="adminCostCentersList.edit(this)"><i class="fa fa-edit"></i> Edit</button>
+        </section>
+    </div>
+</article>
+
+

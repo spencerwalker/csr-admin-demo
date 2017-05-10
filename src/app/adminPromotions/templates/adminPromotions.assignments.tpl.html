@@ -1,0 +1,53 @@
+<form name="promotionAssignmentForm" am-layout="vertical" ng-submit="promotionAssignments.save()">
+    <header class="aveda-blue-header">
+        <h3>Promotion Assignments</h3>
+        <i class="fa fa-3x green-text fa-times" ng-click="promotionAssignments.close()"></i>
+    </header>
+    <fieldset am-layout>
+        <div role="group" am-padding>
+            <label>
+                <input type="checkbox" ng-model="promotionAssignments.Assignments.AllUsers" ng-change="promotionAssignments.allUsersToggle(promotionAssignments.Assignments.AllUsers)" />
+                All Users
+            </label>
+            <label>
+                <input type="checkbox" ng-model="promotionAssignments.Assignments.Internal" ng-change="promotionAssignments.internalUsersToggle(promotionAssignments.Assignments.Internal)" ng-disabled="promotionAssignments.Assignments.AllUsers" />
+                Internal Only
+            </label>
+            <!--<label>
+                <input type="checkbox" ng-model="promotionAssignments.Assignments.External" ng-disabled="promotionAssignments.Assignments.AllUsers" />
+                External Users
+            </label>-->
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Regions (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="region in promotionAssignments.regions">
+                <input type="checkbox" ng-model="region.Selected" ng-disabled="promotionAssignments.Assignments.AllUsers" />
+                {{region.Name}}
+            </label>
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Salon Types (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="type in promotionAssignments.salonTypes">
+                <input type="checkbox" ng-model="type.Selected" ng-disabled="promotionAssignments.Assignments.AllUsers" />
+                {{type.Type}}
+            </label>
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Plants (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="plant in promotionAssignments.plants">
+                <input type="checkbox" ng-model="plant.Selected" ng-disabled="promotionAssignments.Assignments.AllUsers" />
+                {{plant.Plant}}
+            </label>
+        </div>
+    </fieldset>
+    <hr/>
+    <div am-padding>
+        <button type="submit" class="am-btn am-primary">Save</button>
+    </div>
+</form>

@@ -1,0 +1,46 @@
+<header class="aveda-blue-header">
+    <h3><span class="green-text">Editing: </span>{{editCategoryModal.originalName}}</h3>
+</header>
+<form name="editCategory" am-layout="horizontal" am-padding ng-submit="editCategoryModal.saveCategory()"
+      cg-busy="{promise:editCategoryModal.modalLoading.promise, message:editCategoryModal.modalLoading.message, templateUrl:'base/templates/base.loading.tpl.html'}">
+    <fieldset am-layout="stack">
+        <div role="group">
+            <label>Name</label>
+            <input type="text" ng-model="editCategoryModal.selectedCategory.Name" ng-pattern="/^[a-zA-Z0-9 ]*$/" ng-required="true" />
+            <label>Description</label>
+            <textarea rows="5" ng-model="editCategoryModal.selectedCategory.Description"></textarea>
+            <label>Image</label>
+            <figure ng-if="editCategoryModal.selectedCategory.xp.Image.URL">
+                <img ng-src="{{editCategoryModal.selectedCategory.xp.Image.URL}}" />
+            </figure>
+            <avedafileupload extensions="jpg, jpeg, gif, png" object="editCategoryModal.selectedCategory"></avedafileupload>
+            <label>
+                <input type="checkbox" ng-model="editCategoryModal.selectedCategory.Active" />
+                Active
+            </label>
+            <section am-block>
+                <div class="product-assignment-list">
+                    <label>Search Products</label>
+                    <input type="text" ng-model="editCategoryModal.searchTerm" ng-change="editCategoryModal.searchProducts(editCategoryModal.searchTerm)" placeholder="Search products..." />
+                    <select name="AvailableProducts" multiple ng-multiple="true"
+                            ng-model="editCategoryModal.selectedAvailableProducts"
+                            ng-options="product as (product.Name + ' ' + (product.xp.Size ? product.xp.Size : '') + ' (' + (product.ID) + ')') for product in editCategoryModal.searchResults | categoryProductSearch:editCategoryModal.searchTerm | orderBy:'Name'">
+                        <option value="" ng-disabled="true" ng-show="editCategoryModal.searchingProducts">Searching...</option>
+                    </select>
+                    <button type="button" class="am-btn am-primary" ng-click="editCategoryModal.addProducts()" ng-disabled="!editCategoryModal.selectedAvailableProducts || !editCategoryModal.selectedAvailableProducts.length">Add</button>
+                </div>
+                <div class="product-assignment-list">
+                    <label>Assigned Products</label>
+                    <select name="CategoryProducts" multiple ng-multiple="true"
+                            ng-model="editCategoryModal.selectedCategoryProducts"
+                            ng-options="product as (product.Name + ' ' + (product.xp.Size ? product.xp.Size : '') + ' (' + (product.ID) + ')') for product in editCategoryModal.categoryProducts | orderBy:'Name'">
+                    </select>
+                    <button type="button" class="am-btn" ng-click="editCategoryModal.removeProducts()" ng-disabled="!editCategoryModal.selectedCategoryProducts || !editCategoryModal.selectedCategoryProducts.length">Remove</button>
+                </div>
+            </section>
+            <button type="button" class="am-btn" ng-click="editCategoryModal.deleteCategory()">Delete</button>
+            <button type="button" class="am-btn" ng-click="editCategoryModal.cancel()">Cancel</button>
+            <button type="submit" class="am-btn am-primary" ng-disabled="editCategory.$invalid">Save</button>
+        </div>
+    </fieldset>
+</form>

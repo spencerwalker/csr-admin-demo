@@ -1,0 +1,53 @@
+<header class="aveda-blue-header">
+    <h3>New Cost Center</h3>
+</header>
+<form name="createNewCostCenter" am-layout="vertical" am-padding ng-submit="costCenterModal.save(costCenterModal.costCenterType)">
+    <fieldset am-layout="stack">
+        <div role="group">
+            <label>Name</label>
+            <input type="text" ng-model="costCenterModal.costCenter.Name" ng-required="true"/>
+            <label>Description</label>
+            <textarea ng-model="costCenterModal.costCenter.Description"></textarea>
+            <div ng-if="costCenterModal.costCenterType == 'External'">
+                <div am-block="5">
+                    <label>Available Regions</label>
+                    <input type="text" ng-model="costCenterModal.searchTerm" placeholder="Filter available customer groups..." />
+                    <select name="AvailableParties" multiple ng-multiple="true"
+                            ng-model="costCenterModal.selectedAvailableParties"
+                            ng-options="region as (region.ID + ' - ' + region.Name) for region in costCenterModal.availableParties | filter: costCenterModal.searchTerm | orderBy:'ID'"></select>
+                </div>
+                <div class="am-text-c" am-block="2">
+                    <button type="button" class="am-btn" ng-click="costCenterModal.addParties()"><i class="fa fa-angle-double-right"></i></button><br/>
+                    <button type="button" class="am-btn" ng-click="costCenterModal.removeParties()"><i class="fa fa-angle-double-left"></i></button>
+                </div>
+                <div am-block="5">
+                    <label>Assigned Regions</label>
+                    <select name="AssignedParties" multiple ng-multiple="true"
+                            ng-model="costCenterModal.selectedCostCenterParties"
+                            ng-options="region as (region.ID + ' - ' + region.Name) for region in costCenterModal.assignedParties | orderBy:'ID'"></select>
+                </div>
+            </div>
+            <section am-block ng-if="costCenterModal.costCenterType == 'Internal'">
+                <div am-block="5">
+                    <label>Available customer groups</label>
+                    <input type="text" ng-model="costCenterModal.searchTerm" placeholder="Filter available customer groups..." />
+                    <select name="AvailableParties" multiple ng-multiple="true"
+                            ng-model="costCenterModal.selectedAvailableParties"
+                            ng-options="group as group.Name for group in costCenterModal.availableParties | filter: costCenterModal.searchTerm | orderBy:'Name'"></select>
+                </div>
+                <div class="am-text-c" am-block="2">
+                    <button type="button" class="am-btn" ng-click="costCenterModal.addParties()"><i class="fa fa-angle-double-right"></i></button><br/>
+                    <button type="button" class="am-btn" ng-click="costCenterModal.removeParties()"><i class="fa fa-angle-double-left"></i></button>
+                </div>
+                <div am-block="5">
+                    <label>Assigned Customer Groups</label>
+                    <select name="AssignedParties" multiple ng-multiple="true"
+                            ng-model="costCenterModal.selectedCostCenterParties"
+                            ng-options="group as group.Name for group in costCenterModal.assignedParties | orderBy:'Name'"></select>
+                </div>
+            </section>
+            <button type="button" class="am-btn" ng-click="costCenterModal.cancel()">Cancel</button>
+            <button type="submit" class="am-btn am-primary" ng-disabled="createNewCostCenter.$invalid">Create</button>
+        </div>
+    </fieldset>
+</form>

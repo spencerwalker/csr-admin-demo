@@ -1,0 +1,42 @@
+<nav am-layout="vertical aveda-left-nav">
+	<a ui-sref-active="active" ui-sref="base.dashboard" ui-sref-opts="{reload: true}"><aveda-logo data-color="#FFF"></aveda-logo></a>
+	<a ui-sref-active="active" ui-sref="base.adminCategories"  ui-sref-opts="{reload: true}"><i class="fa fa-sitemap"></i> Categories</a>
+	<a ui-sref-active="active" ui-sref="base.adminProducts"  ui-sref-opts="{reload: true}"><i class="fa fa-cube"></i> Products</a>
+	<a ui-sref-active="active" ui-sref="base.adminPromotions"  ui-sref-opts="{reload: true}"><i class="fa fa-cubes"></i> Promotions</a>
+	<a ui-sref-active="active" ui-sref="base.adminLaunchControls"  ui-sref-opts="{reload: true}"><i class="fa fa-calendar"></i> Launch Controls</a>
+	<a ui-sref-active="active" ui-sref="base.adminNews" ui-sref-opts="{reload: true}"><i class="fa fa-newspaper-o"></i> Aveda News</a>
+	<a ui-sref-active="active" ui-sref="base.adminUpdates" ui-sref-opts="{reload: true}"><i class="fa fa-exclamation-circle"></i> Urgent Updates</a>
+	<a ui-sref-active="active" ui-sref="base.adminCostCenters" ui-sref-opts="{reload: true}"><i class="fa fa-cogs"></i> Cost Centers</a>
+	<a ui-sref-active="active" ui-sref="base.adminAdminUsers" ui-sref-opts="{reload: true}"><i class="fa fa-users"></i> Admin Users</a>
+	<a ui-sref-active="active" ui-sref="base.adminInternalUsers" ui-sref-opts="{reload: true}"><i class="fa fa-users"></i> Internal Users</a>
+	<a ui-sref-active="active" ui-sref="base.adminApprovals" ui-sref-opts="{reload: true}"><i class="fa fa-wrench"></i> Approval Rules</a>
+	<div class="left-nav-dropdown" role="dropdown" dropdown auto-close="disabled">
+		<button type="button" dropdown-toggle>
+			<i class="fa fa-chevron-up"></i>
+			<i class="fa fa-flag"></i>
+			Claims Categories
+		</button>
+		<nav dropdown-menu>
+			<a ui-sref="base.adminClaims({claimType: 'Order'})">Order Claims</a>
+			<a ui-sref="base.adminClaims({claimType: 'NonOrder'})">Non-Order Claims</a>
+		</nav>
+	</div>
+	<!--<a ui-sref-active="active" ui-sref="base.adminSalons" ui-sref-opts="{reload: true}"><i class="fa fa-cogs"></i> Salons</a>-->
+	<a ui-sref-active="active" ui-sref="base.adminResubmitOrders" ui-sref-opts="{reload: true}"><i class="fa fa-send-o"></i> Resubmit Orders</a>
+	<a ui-sref-active="active" ui-sref="base.adminCreditCards" ui-sref-opts="{reload: true}"><i class="fa fa-credit-card"></i> Credit Card Cleanup</a>
+	<a ui-sref-active="active" ui-sref="base.adminDiagnosticTool" ui-sref-opts="{reload: true}"><i class="fa fa-laptop"></i> Diagnostic Tool</a>
+	<a ui-sref-active="active" ui-sref="base.adminMisc" ui-sref-opts="{reload: true}"><i class="fa fa-gear"></i> Miscellaneous</a>
+	<div class="left-nav-dropdown" role="dropdown" dropdown auto-close="disabled" ng-if="base.dataWarehouseUnlocked">
+		<button type="button" dropdown-toggle>
+			<i class="fa fa-chevron-up"></i>
+			<i class="fa fa-server"></i>
+			Data Warehouse
+		</button>
+		<nav dropdown-menu>
+			<a ui-sref="base.adminDataWarehouse({tab: 'warehouse'})">Azure DataWarehouse</a>
+			<a ui-sref="base.adminDataWarehouse({tab: 'docdb'})">Azure DocDB</a>
+		</nav>
+	</div>
+	<a ng-click="base.logout()"><i class="fa fa-power-off"></i> Log Out</a>
+</nav>
+<p class="am-text-c"><small>Copyright &#169; {{application.now.getFullYear()}}, Aveda</small></p>

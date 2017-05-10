@@ -1,0 +1,45 @@
+<header class="aveda-blue-header">
+    <h3>Administer Promotions</h3>
+    <button class="am-btn am-primary" ui-sref="base.adminPromotions.create"><i class="fa fa-plus-circle"></i> Create New</button>
+</header>
+<div am-padding-l="large">
+    <script type="text/ng-template" id="nodes_renderer.html">
+        <div ui-tree-handle>
+            <header>
+                <i data-nodrag class="fa" ng-class="{'fa-chevron-circle-right':Collapsed, 'fa-chevron-circle-down':!Collapsed}" ng-click="adminPromotionsList.toggleCollapse(this)"></i>
+                <h4>{{node.Name}} <small><span class="aveda-pill {{node.isActive ? 'green' : 'orange'}}">{{node.isActive ? 'Active' : 'Inactive'}}</span></small></h4>
+                <button class="am-btn am-secondary" ui-sref="base.adminPromotions.edit({id:node.ID})"><i class="fa fa-edit"></i> Edit</button>
+            </header>
+            <div am-padding ng-hide="Collapsed">
+                <blockquote>
+                    <b>{{'Effective:  ' + (node.xp.StartDate | date:shortDate) + ' - ' + (node.xp.EndDate | date:shortDate)}}<br/></b>
+                    <b ng-if="node.xp.FreeShipping"><i class="fa fa-info-circle green-text"></i> This promotion comes with free shipping.</b>
+                </blockquote>
+                <p ng-bind-html="node.Description"></p>
+                <div>
+                    <label>Files:</label><br />
+                    <a ng-repeat="file in node.xp.Files" href="{{file.URL}}" target="_blank">{{file.DisplayName}}<br /></a>
+                </div>
+                <div class="promo-item" ng-repeat="item in node.xp.Promo">
+                    <span>{{item.Quantity}}</span>
+                    <h5>{{item.FullProduct.Name}}<br/>
+                        <small class="gray-text">{{item.FullProduct.xp.UPC}}</small>
+                    </h5>
+                <span class="green-text" ng-if="item.Free">
+                    <b>FREE</b>
+                </span>
+                </div>
+            </div>
+        </div>
+    </script>
+    <article>
+        <section am-padding-l="large" am-padding-p="small">
+            <div ui-tree="adminPromotionsList.treeOptions" id="tree-root">
+                <div ui-tree-nodes ng-model="adminPromotionsList.promotions">
+                    <section class="promotion-summary" ng-repeat="node in adminPromotionsList.promotions" ui-tree-node ng-include="'nodes_renderer.html'" ng-init="Collapsed = true"></section>
+                </div>
+            </div>
+        </section>
+        <section></section>
+    </article>
+</div>

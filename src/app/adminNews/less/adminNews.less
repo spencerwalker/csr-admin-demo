@@ -1,0 +1,118 @@
+form[name="createNewsArticle"],
+form[name="saveNewsArticle"] {
+  background-color:@aveda-blue;
+  label {
+    color:@aveda-white;
+  }
+}
+
+.news-summary > [ta-bind] {
+  max-height:60px;
+  overflow:hidden;
+  position:relative;
+  &:after {
+    content:' ';
+    position:absolute;
+    left:0;
+    right:0;
+    top:80%;
+    bottom:0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C */
+  }
+}
+
+.news-summary {
+  margin-bottom:@am-root-margin;
+  border-top:1px solid @aveda-gray;
+  background-color:@aveda-white;
+  header {
+    &:not(.aveda-detail-header) {
+      padding-right:80px;
+    }
+    * {
+      margin:0;
+    }
+    h4 {
+      font-weight:600;
+    }
+    p {
+      color:@aveda-gray-text;
+    }
+  }
+  & > [ta-bind] {
+    font-size:0.8em;
+  }
+  & > a {
+    color:@am-clr-body;
+    text-decoration: none;
+    font-size:0.8em;
+    margin-top:@am-root-margin;
+  }
+  & > button {
+    position:absolute;
+    right:@am-root-padding;
+    top:@am-root-padding;
+    margin:0;
+    padding:0.5em 1em;
+  }
+}
+
+.assignment-summary {
+  position:relative;
+  padding-right:80px;
+  border-top:1px solid lighten(@aveda-light-blue, 15);
+  border-bottom:1px solid lighten(@aveda-light-blue, 5);
+  background-color: lighten(@aveda-light-blue, 25);
+  i {
+    color:@aveda-dark-blue;
+    font-size:1.4em;
+  }
+  button {
+    position:absolute;
+    right:@am-root-padding;
+    top:@am-root-padding * 0.7em;
+    margin:0;
+    padding:0.5em 1em;
+  }
+}
+
+.news-article {
+  background-color:@aveda-white;
+  header {
+    border-bottom:1px solid @aveda-gray;
+    * {
+      margin:0;
+    }
+    h3 {
+      font-weight:600;
+    }
+    p {
+      color:@aveda-gray-text;
+    }
+  }
+}
+
+.news-article-files {
+  background-color:@aveda-white;
+  border-top:1px solid @aveda-gray;
+  p {
+    color:@aveda-gray-text;
+  }
+}
+
+.modal-infoAssignment {
+  max-width:900px;
+  margin:@am-root-margin auto 0;
+  .modal-content {
+    border:none;
+  }
+  legend {
+    width:100%;
+    padding:@am-root-padding;
+    background-color: @aveda-light-blue;
+    color:@aveda-white;
+  }
+  label {
+    margin-right:1.5em;
+  }
+}

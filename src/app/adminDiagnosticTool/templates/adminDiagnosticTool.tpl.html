@@ -1,0 +1,39 @@
+<header class="aveda-blue-header">
+    <h3>Diagnostic Tool</h3>
+</header>
+<article>
+    <section am-padding-l="large" am-padding-p="small">
+        <form name="adminDiagnosticToolForm" ng-submit="adminDiagnosticTool.submit()">
+            <fieldset am-layout="stack">
+                <div role="group">
+                    <label>Type</label>
+                    <select ng-model="adminDiagnosticTool.request.Type" ng-options="type as type for type in ['Review', 'Submit', 'Credit Card']" required></select>
+                </div>
+                <div role="group" am-layout="inline">
+                    <label>Salon</label>
+                    <input type="search" placeholder="Search salons..." style="box-sizing: inherit"
+                        ng-model="adminDiagnosticTool.salonSearch"
+                        typeahead-append-to-body="true"
+                        typeahead-template-url="adminDiagnosticTool/templates/adminDiagnosticTool.search.result.tpl.html"
+                        typeahead="group as group.Name for group in adminDiagnosticTool.searchSalons($viewValue)"
+                        typeahead-on-select="adminDiagnosticTool.selectSalon($item)" autofocus/>
+                </div>
+                <div role="group">
+                    <label>Body</label>
+                    <textarea json-text ng-model="adminDiagnosticTool.request.Body" required></textarea>
+                </div>
+                <button type="submit" class="am-btn am-primary" ng-disabled="adminDiagnosticToolForm.$invalid">Send</button>
+            </fieldset>
+        </form>
+    </section>
+    <section am-padding-l="large" am-padding-p="small">
+        <form name="adminDiagnosticToolResponseForm" ng-if="adminDiagnosticTool.response">
+            <fieldset am-layout="stack">
+                <div role="group">
+                    <label>Response</label>
+                    <pre>{{adminDiagnosticTool.response | json}}</pre>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+</article>

@@ -1,0 +1,17 @@
+<section am-padding>
+    <form name="editPermissions" am-layout="horizontal">
+        <h5 class="am-text-c">Edit Permissions</h5>
+        <fieldset am-layout="stack">
+            <div role="group" am-padding>
+                <div ng-repeat="(permission, assigned) in adminPermissions.permissionsList">
+                    <label>
+                        <input type="checkbox" ng-model="adminPermissions.permissionsList[permission]" />
+                        {{adminPermissions.permissionsMap[permission]}}
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <button type="button" class="am-btn am-primary" ng-click="adminPermissions.close()">Keep Changes</button>
+    <button type="button" class="am-btn" ng-click="adminPermissions.cancel()">Discard Changes</button>
+</section>

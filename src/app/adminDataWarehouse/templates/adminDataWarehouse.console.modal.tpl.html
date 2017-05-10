@@ -1,0 +1,32 @@
+<header class="aveda-blue-header">
+    <h3><span class="aveda-green">Console</span></h3>
+</header>
+<form name="AdminDataWarehouseConsoleForm" am-layout="vertical" am-padding>
+    <fieldset am-layout="stack" ng-show="!adminDataWarehouseConsole.results">
+        <div role="group">
+            <label>Method</label>
+            <select ng-model="adminDataWarehouseConsole.request.Method" ng-options="method as (method + (method == 'DELETE' ? ' (disabled)' : '')) disable when method == 'DELETE' for method in adminDataWarehouseConsole.methods" required></select>
+        </div>
+        <div role="group">
+            <label>URL</label>
+            <input type="text" ng-model="adminDataWarehouseConsole.request.URL" required />
+        </div>
+        <div role="group" ng-show="['POST', 'PUT'].indexOf(adminDataWarehouseConsole.request.Method) > -1">
+            <label>Body</label>
+            <textarea json-text ng-model="adminDataWarehouseConsole.request.Body" ng-required="['POST', 'PUT'].indexOf(adminDataWarehouseConsole.request.Method) > -1"></textarea>
+        </div>
+        <div ng-if="adminDataWarehouseConsole.loading" id="ConsoleLoading">
+            <i class="fa fa-spinner fa-5x fa-pulse"></i>
+        </div>
+        <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouseConsole.submit()" ng-disabled="AdminDataWarehouseConsoleForm.$invalid">Send</button>
+    </fieldset>
+    <fieldset am-layout="stack" ng-show="adminDataWarehouseConsole.results">
+        <div role="group">
+            <label>Results</label>
+            <pre>
+                {{adminDataWarehouseConsole.results | json:4}}
+            </pre>
+        </div>
+        <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouseConsole.reset()">Reset</button>
+    </fieldset>
+</form>

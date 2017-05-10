@@ -1,0 +1,9 @@
+<div class="product-search-result">
+	<figure>
+		<img ng-src="{{match.model.xp.Image.URL || 'assets/AvedaNoImage.png'}}" />
+	</figure>
+	<h6>
+		<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span><br/>
+		<small bind-html-unsafe="match.model.ID | typeaheadHighlight:query"></small>
+	</h6>
+</div>

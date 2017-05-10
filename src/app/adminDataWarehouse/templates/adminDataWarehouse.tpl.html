@@ -1,0 +1,111 @@
+<header class="aveda-blue-header">
+    <h3>Data Warehouse</h3>
+    <nav am-layout="aveda-tabs">
+        <b><a ng-class="{'active': adminDataWarehouse.tab == 'warehouse'}" ng-click="adminDataWarehouse.setTab('warehouse')">Azure Datawarehouse</a></b>
+        <b><a ng-class="{'active': adminDataWarehouse.tab == 'docdb'}" ng-click="adminDataWarehouse.setTab('docdb')">Azure DocumentDB</a></b>
+    </nav>
+    <button class="am-btn am-primary" ng-click="adminDataWarehouse.openConsole()">
+        <i class="fa fa-terminal"></i>
+        Console<span class="flashit">_</span>
+    </button>
+</header>
+<article>
+    <section am-padding-l="large" am-padding-p="small" ng-if="adminDataWarehouse.tab == 'warehouse'">
+        <p class="help-block">The buttons below will list all items under this organization regardless of assignments, active/inactive, etc.
+            When completed, it will automatically generate and download a zip file containing JSON files of all items for your selected resource.
+        </p>
+
+        <hr />
+
+        <h3>User Groups (Salons)</h3>
+        <div>
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.generateJSON('UserGroups')">Generate User Groups (Salons) JSON files</button>
+        </div>
+
+        <hr/>
+
+        <h3>Combined Data</h3>
+        <div style="margin-left: 25px;">
+            <h4>Orders and Line Items (with Products)</h4>
+            <div role="group" am-block="gutter">
+                <div>
+                    <label>Order Count</label>
+                    <input type="number" ng-model="adminDataWarehouse.options.OrderCount" ng-disabled="adminDataWarehouse.options.AllOrders" />
+                    <input type="checkbox" ng-model="adminDataWarehouse.options.AllOrders" ng-change="adminDataWarehouse.orderCountChange()" /> All
+                </div>
+            </div>
+            <div role="group" am-block="gutter">
+                <div>
+                    <label>Line Item File Structure</label><br />
+                    <input type="radio" name="LineItemStructure" ng-model="adminDataWarehouse.options.LineItemStructure" value="Single"><small>One File Per Order With Array of Line Items</small><br/>
+                    <input type="radio" name="LineItemStructure" ng-model="adminDataWarehouse.options.LineItemStructure" value="Separate"><small>One File Per Line Item</small>
+                </div>
+            </div>
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.generateJSON('OrdersLineItemsProducts')" ng-disabled="!adminDataWarehouse.options.OrderCount && (!adminDataWarehouse.options.OrderCount && !adminDataWarehouse.options.AllOrders)">Generate Orders and Line Items (with Products)</button>
+        </div>
+    </section>
+
+    <section am-padding-l="large" am-padding-p="small" ng-if="adminDataWarehouse.tab == 'docdb'">
+        <h3>Firebase JSON</h3>
+        <p class="help-block">
+            The following buttons will generate a zip file of JSON objects containing the various resources. The data is pulled from Firebase and modified for the
+            new and improved structure moving forward.
+        </p>
+        <div style="margin-left: 25px;">
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.FirebaseToAzure('Notes')">Notes</button><br />
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.FirebaseToAzure('Updates')">Updates</button><br />
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.FirebaseToAzure('News')">News</button><br />
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.FirebaseToAzure('ClaimCategoryOptions')">Claim Category Options</button><br />
+            <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.FirebaseToAzure('Claims')">Claims</button><br />
+        </div>
+
+        <hr />
+
+        <h3>Move Production Firebase Data to Production Azure DocumentDB</h3>
+        <p class="help-block">
+            This button will automatically move Production data from Firebase to Azure DocumentDB. It's really only meant for Go-Live. It will simply call CREATE for all
+            files, meaning it will NOT update existing documents on DocumentDB.
+        </p>
+        <p class="aveda-red-text" ng-if="adminDataWarehouse.environment != 'production'">This can only be done on Production</p>
+        <div style="margin-left: 25px;">
+            <div ng-if="adminDataWarehouse.environment == 'production' || adminDataWarehouse.override">
+                <button type="button" class="am-btn am-btn-danger" ng-click="adminDataWarehouse.moveProductionData('updates')">
+                    Updates <i class="fa fa-check" ng-if="adminDataWarehouse.collectionsCreated.indexOf('updates') > -1"></i>
+                </button>
+                <button type="button" class="am-btn am-btn-danger" ng-click="adminDataWarehouse.moveProductionData('news')">
+                    News <i class="fa fa-check" ng-if="adminDataWarehouse.collectionsCreated.indexOf('news') > -1"></i>
+                </button>
+                <button type="button" class="am-btn am-btn-danger" ng-click="adminDataWarehouse.moveProductionData('notes')">
+                    Notes <i class="fa fa-check" ng-if="adminDataWarehouse.collectionsCreated.indexOf('notes') > -1"></i>
+                </button>
+                <button type="button" class="am-btn am-btn-danger" ng-click="adminDataWarehouse.moveProductionData('claimcategoryoptions')">
+                    Claim Category Options <i class="fa fa-check" ng-if="adminDataWarehouse.collectionsCreated.indexOf('claimcategoryoptions') > -1"></i>
+                </button>
+                <button type="button" class="am-btn am-btn-danger" ng-click="adminDataWarehouse.moveProductionData('claims')">
+                    Claims <i class="fa fa-check" ng-if="adminDataWarehouse.collectionsCreated.indexOf('claims') > -1"></i>
+                </button>
+            </div>
+
+            <span class="aveda-red-text" ng-if="adminDataWarehouse.movingData"><b>Running</b> (results will be added below)</span>
+
+            <br/>
+
+            <button type="button" class="am-btn am-btn-danger" ng-click="adminDataWarehouse.deleteAzureDocuments()" ng-if="adminDataWarehouse.environment == 'production' || adminDataWarehouse.override">Delete DocDB Data</button><br />
+            <div style="color: #fff; background-color: #000; padding: 20px;" ng-if="adminDataWarehouse.azureProgress.length">
+                <p style="margin-bottom: 2px;" ng-repeat="update in adminDataWarehouse.azureProgress">> {{update}}</p>
+                <p style="margin-bottom: 2px;" ng-if="adminDataWarehouse.movingData">> <span class="flashit">_</span></p>
+            </div>
+            <pre ng-if="adminDataWarehouse.azureResults">{{adminDataWarehouse.azureResults | json}}</pre>
+        </div>
+
+        <hr />
+
+        <h3>Create Aveda Hierarchy on Azure DocDB</h3>
+        <p class="help-block">
+            This button will generate the JSON object for Aveda Hierachy and create the document on Azure DocDB. Updates should still be done
+            on the Miscellaneous page.
+        </p>
+
+        <button type="button" class="am-btn am-primary" ng-click="adminDataWarehouse.createAvedaHierarchy()">Create Aveda Hierarchy Document</button>
+    </section>
+</article>

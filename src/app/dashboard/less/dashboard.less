@@ -1,0 +1,77 @@
+[@{am-block-var}="dashboard-header"] {
+  margin-top:@am-root-margin + 1em;
+  padding:0 @am-root-padding;
+  h4 {
+	font-weight:bold;
+	color:@aveda-white;
+	margin:0;
+	line-height:30px;
+  }
+}
+
+[@{am-block-var}="aveda-update"] {
+  font-size:0.8em;
+  & > div {
+	height:30px;
+	padding:@am-root-padding * 0.5em;
+	position:relative;
+	border:1px solid @aveda-maroon;
+	&:first-child {
+	  background-color:@aveda-maroon;
+	  color:#fff;
+	  text-align:center;
+	}
+	&:last-child {
+	  background-color:@aveda-white;
+	}
+  }
+  p {
+	padding:0;
+	margin:0;
+	white-space: nowrap;
+	overflow:hidden;
+	i {
+	  position:absolute;
+	  right:0;
+	  top:0;
+	  bottom:0;
+	  line-height:30px;
+	  width:30px;
+	  color:@aveda-maroon;
+	  border-left:1px solid @aveda-maroon;
+	  background-color:@aveda-white;
+	  text-align:center;
+	}
+  }
+}
+
+.metrics-detail-small {
+  @media(orientation: landscape) {
+    max-width: 600px;
+  }
+}
+
+.aveda-uat-dashboard {
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+  align-content:center;
+  align-items:center;
+  text-align:center;
+  & > div {
+	background-color:@aveda-off-white;
+	max-width:800px;
+	margin:0 auto;
+	padding:50px;
+	border-radius:40px;
+  }
+  figure {
+	max-width:300px;
+	margin:0 auto;
+  }
+  g > * {
+
+  }
+}

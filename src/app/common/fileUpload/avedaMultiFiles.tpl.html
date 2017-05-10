@@ -1,0 +1,12 @@
+<div class="upload">
+    <label for="upload" class="am-btn am-primary btn-label" ng-show="!object.ReadyToUpload">
+        <span ng-show="!object.ImageUpdated">Choose File</span>
+        <span ng-show="object.ImageUpdated">Choose Another File</span>
+    </label>
+    <input type="file" name="upload" id="upload" style="display: none" />
+    <span class="help-block error-msg" ng-show="invalidExtension">Invalid File Type</span>
+    <div class="upload-confirm" ng-show="object.Files.length > 0">
+        <label>Uploaded Files</label>
+        <span ng-repeat="file in object.Files">{{file.DisplayName}} <a ng-click="removeFile(file)">remove</a><br /></span>
+    </div>
+</div>

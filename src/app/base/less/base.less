@@ -1,0 +1,294 @@
+#BaseTop {
+  height:@oc-base-top-height;
+  background-color:@oc-base-top-clr-bg;
+  color:@aveda-text-color;
+}
+#BaseBottom {
+  height:@oc-base-bottom-height;
+  background-color:@oc-base-bottom-clr-bg;
+}
+#BaseLeft {
+  flex-flow:column nowrap;
+  background-color:@oc-base-left-clr-bg;
+}
+#BaseRight {
+  background-color:@oc-base-right-clr-bg;
+}
+#BaseMain {
+  flex-flow:column nowrap;
+  background: linear-gradient(135deg, #c9cccb 0%,#ded5ce 63%,#ebebe8 100%);
+  & > ui-view {
+    flex:1 0 auto;
+  }
+}
+
+#BaseLeft,
+#BaseRight,
+#BaseMain {
+  height: calc(~"100vh" - (@oc-base-top-height + @oc-base-bottom-height));
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+@media(orientation:landscape) {
+  #BaseRight,
+  #BaseLeft {
+    max-width:@aveda-base-aside-width;
+    min-width:@aveda-base-aside-width;
+  }
+}
+@media(orientation:portrait) {
+  #BaseLeft,
+  #BaseRight {
+	position:fixed;
+	top:@oc-base-top-height;
+	bottom:@oc-base-bottom-height;
+	max-width:@aveda-base-aside-width;
+	z-index:1000;
+	transition: all 200ms;
+  }
+  #BaseLeft {
+	left:-@aveda-base-aside-width;
+	&.open {
+	  left:0px;
+	}
+  }
+  #BaseRight {
+	right:-@aveda-base-aside-width;
+	&.open {
+	  right:0px;
+	}
+  }
+}
+
+//Aveda Global Navigation
+nav[@{am-layout-var}~='aveda-global-nav'] {
+
+  & > *:not(:first-child) {
+    border-left:1px solid @aveda-gray;
+  }
+
+  & > button,
+  & > div[role="dropdown"] > button {
+    background-color:@aveda-white;
+    white-space: nowrap;
+    i:not(.fa-caret-up) {
+      font-size:1.3em;
+      width:40px;
+      text-align:center;
+    }
+    i.fa-caret-up {
+      float:right;
+      color:@aveda-gray;
+    }
+  }
+
+  & > button,
+  & > div[role="dropdown"]:not(#Account) > button {
+    text-transform: uppercase;
+    font-weight:600;
+  }
+
+  form { //FIX for the inputs breaking out of the div[role="group"]
+    div[role~="group"] {
+      > input {
+        line-height:23px;
+        border:1px solid @aveda-input-border;
+        border-top-right-radius: @aveda-input-border-radius;
+        border-bottom-right-radius: @aveda-input-border-radius;
+      }
+      > button:not([type="submit"]),
+      > div[role="dropdown"] > button:not([type="submit"]) {
+        .fa-caret-up {
+          margin-left:40px;
+        }
+        border-color:@aveda-input-border;
+        border-top-left-radius: @aveda-input-border-radius;
+        border-bottom-left-radius: @aveda-input-border-radius;
+      }
+      i.fa-search {
+        color:@aveda-green;
+        position:absolute;
+        right:@am-root-padding + 0.5em;
+        top:@am-root-padding;
+        font-size:1.4em;
+      }
+    }
+    padding-left:@am-nav-link-padding;
+    padding-right:@am-nav-link-padding;
+  }
+
+  @media( orientation:landscape ) {
+    & > button,
+    & > div[role="dropdown"] {
+      max-width:@aveda-base-aside-width;
+      min-width:@aveda-base-aside-width;
+      text-align:left;
+    }
+    & > div[role="dropdown"] > button {
+      text-align:left;
+    }
+  }
+
+  @media (orientation:portrait) {
+    & > button,
+    & > div[role="dropdown"]:not(#Build) {
+      flex:0 1 auto !important;
+    }
+    & > div[role="dropdown"]#Build > button {
+      text-align:left;
+    }
+    form {
+      background-color:@aveda-white;
+      position:absolute;
+      left:0;
+      right:0;
+      top:100%;
+      height:60px;
+      padding:0 (@am-root-padding* 0.5em);
+      border-top:1px solid @aveda-gray;
+    }
+  }
+}
+
+//Dropdowns in top nav
+nav[@{am-layout-var}~='aveda-global-nav'] div[role~="dropdown"] {
+  button + ul {
+    top:98%;
+    background-color:@aveda-white;
+    border-radius:3px;
+    border:1px solid @aveda-gray;
+    padding:(@am-root-padding * 0.5em) 0;
+    & > li {
+      padding:(@am-root-padding * 0.5em) @am-root-padding;
+      color:@aveda-gray-text;
+      &:hover {
+        background-color:@aveda-off-white;
+      }
+    }
+  }
+  button + nav {
+    min-width:250px; //Adjust min width for dropdowns to be smaller (default 320px)
+    top:98%; //Adjust default top position to allow some overlap
+    background-color:@aveda-white;
+    border-radius:3px;
+    border:1px solid @aveda-gray;
+    padding:(@am-root-padding * 0.5em) 0;
+    & > a {
+      flex:1 1 auto;
+      padding:(@am-root-padding * 0.5em) @am-root-padding;
+      color:@aveda-gray-text;
+      &:hover {
+        background-color:@aveda-off-white;
+      }
+    }
+  }
+}
+
+//Account Dropdown specific
+div[role="dropdown"]#Account {
+  nav {
+    i:not(.fa-sign-out) {
+      width:30px;
+      text-align:center;
+    }
+    a:last-of-type {
+      font-weight:600;
+      color:@aveda-green;
+      i {
+        float:right;
+        color:@aveda-gray-text;
+      }
+    }
+  }
+}
+
+//Aveda Left Navigation
+nav[@{am-layout-var}~='aveda-left-nav'] {
+  flex:1; //Push the copyright to the bottom of the left drawer
+  div[role="dropdown"] > button {
+    font-weight:500;
+    text-transform: uppercase;
+    i.fa-chevron-up {
+      float:right;
+      color:@aveda-dark-green;
+    }
+    + nav {
+      border:none;
+      overflow-y:hidden;
+      background-color:transparent;
+      a {
+        letter-spacing: normal;
+        text-transform: none;
+        font-weight:normal;
+        padding-left:58px;
+        padding-top:@am-root-padding * 0.3em;
+        &:not(:last-child) {
+          padding-bottom:@am-root-padding * 0.3em;
+        }
+        &:after,
+        &:before {
+          content:none;
+        }
+        &:focus,
+        &:active,
+        &:hover,
+        &.active {
+          color:@aveda-lime;
+          background-color:transparent;
+        }
+      }
+    }
+  }
+  div[role="dropdown"],
+  a {
+    font-weight:500;
+    color:@aveda-white;
+    position:relative;
+    text-transform: uppercase;
+    transition:background-color 200ms;
+    i:not(.fa-chevron-up) {
+      width:40px;
+      text-align:center;
+      font-size:1.3em;
+    }
+    &:after {
+      content:' ';
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:0px;
+      background-color:@aveda-lime;
+      transition:width 200ms;
+    }
+    &:before {
+      content:' ';
+      position:absolute;
+      left:-(sqrt((8px * 8px)*2)) * 1px;
+      top:calc(50% - 7px);
+      width:8px;
+      height:8px;
+      background-color:@aveda-lime;
+      transform:rotate(45deg);
+      transition:left 200ms;
+    }
+    &:focus,
+    &.active {
+      color:@aveda-white;
+      background-color:@aveda-dark-green;
+      &:after {
+        width:3px;
+      }
+      &:before {
+        left:-1px;
+      }
+    }
+  }
+  figure {
+    max-width:75%;
+    margin:0 auto;
+    svg {
+      max-height:50px;
+    }
+  }
+}

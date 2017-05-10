@@ -1,0 +1,30 @@
+<header class="aveda-blue-header">
+    <h3>{{editApprovalModal.approval.ApprovalRule ? 'Edit' : 'Create'}} {{editApprovalModal.approval.Name}} Approval Rule</h3>
+</header>
+<form name="editApprovalForm" am-layout="vertical" am-padding ng-submit="editApprovalModal.submit()">
+    <fieldset am-layout="stack">
+        <div role="group" am-block>
+            <div am-block="5">
+                <label>Available Users</label>
+                <input type="text" ng-model="editApprovalModal.searchTerm" placeholder="Filter available users..." />
+                <select name="AvailableUsers" multiple ng-multiple="true"
+                        ng-model="editApprovalModal.selectedAvailableUsers"
+                        ng-options="user as (user.FirstName + ' ' + user.LastName) for user in editApprovalModal.availableUsers | filter: editApprovalModal.searchTerm | orderBy:'Name'"></select>
+            </div>
+            <div class="am-text-c" am-block="2">
+                <button type="button" class="am-btn am-secondary" ng-click="editApprovalModal.addUsers()"><i class="fa fa-angle-double-right"></i></button><br/>
+                <button type="button" class="am-btn am-secondary" ng-click="editApprovalModal.removeUsers()"><i class="fa fa-angle-double-left"></i></button>
+            </div>
+            <div am-block="5">
+                <label>Assigned Approvers</label>
+                <select name="ApprovalUsers" multiple ng-multiple="true"
+                        ng-model="editApprovalModal.selectedApprovalUsers"
+                        ng-options="user as (user.FirstName + ' ' + user.LastName) for user in editApprovalModal.approvalUsers | orderBy:'Name'"></select>
+            </div>
+        </div>
+        <div role="group">
+            <button type="button" class="am-btn am-secondary" ng-click="editApprovalModal.dismissModal()">Discard Changes</button>
+            <button type="submit" class="am-btn am-primary" ng-disabled="editApprovalForm.$invalid">Save Changes</button>
+        </div>
+    </fieldset>
+</form>

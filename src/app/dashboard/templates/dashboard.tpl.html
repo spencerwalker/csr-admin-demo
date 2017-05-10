@@ -1,0 +1,98 @@
+<header>
+    <div am-block="dashboard-header">
+        <div am-block="12 5L">
+            <h4>Welcome to
+                <span style="cursor: default;" ng-mousedown="base.avedaClick($event)">Aveda</span>
+                <span style="cursor: default;" ng-click="dashboard.showSetupToggle()">OrderCloud</span>
+            </h4>
+        </div>
+    </div>
+</header>
+<article am-padding-l ng-hide="dashboard.showSetup">
+    <section am-padding-l class="metrics-detail-small">
+        <table am-layout="aveda-grid-well">
+            <thead>
+            <tr>
+                <th>User Satisfaction Levels</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><iframe src="https://insights-embed.newrelic.com/embedded_widget/5x3rU4aO6QoothoguUrtWJ9nr1hstaOQ" width="100%" height="300" scrolling="no" frameborder="no"></iframe></td>
+            </tr>
+            <tr>
+                <td><iframe src="https://insights-embed.newrelic.com/embedded_widget/OlzlAoOCXDUImm7XvLZvlljTBNsZ9_Xr" width="100%" height="300" scrolling="no" frameborder="no"></iframe></iframe></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section am-padding-l class="metrics-detail-small">
+        <table am-layout="aveda-grid-well">
+            <thead>
+            <tr>
+                <th>Response Times</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><iframe src="https://insights-embed.newrelic.com/embedded_widget/ltKUn7a5uG82hyXMVmxFMiC0jQifwsug" width="100%" height="300" scrolling="no" frameborder="no"></iframe></td>
+            </tr>
+            <tr>
+                <td><iframe src="https://insights-embed.newrelic.com/embedded_widget/4rW5mNbJncLF3AN5AmovUFnHLJPerQDS" width="100%" height="300" scrolling="no" frameborder="no"></iframe></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</article>
+<section am-padding ng-show="dashboard.showSetup">
+    <!--<h4>Customer Groups</h4>
+    <button ng-click="dashboard.createCustomerGroups()">1) Create Customer Groups!</button>
+    <h4>Products</h4>
+    <button ng-click="dashboard.createProducts()" ng-disabled="true">1) Create the Products! <span style="color:red;"> - disabled</span></button>
+    <button ng-click="dashboard.createPrices()" ng-disabled="true">2) Create the Price Schedules! <span style="color:red;"> - disabled</span></button>
+    <button ng-click="dashboard.assignProducts()" ng-disabled="true">3) Assign the Products! <span style="color:red;"> - disabled</span></button>
+    <button ng-click="dashboard.deleteProducts()" ng-disabled="true">4) Rollback the Products! <span style="color:red;"> - disabled</span></button>
+    <button ng-click="dashboard.listProducts()">5) List the Products!</button><br />
+    <hr/>
+    <button ng-click="dashboard.createAndAssignPriceSchedules()">CREATE PRICE SCHEDULES AND ASSIGN PRODUCTS FOR TEST INTEGRATION PRODUCTS</button>
+    <hr/>-->
+    <h4>Cost Centers / Cost Center Groups</h4>
+    <!--<button ng-click="dashboard.setupAdmin()">1) Setup Admin!</button>
+    <button ng-click="dashboard.teardownAdmin()">2) Teardown Admin!</button>-->
+    <p><button class="am-btn am-primary" ng-click="dashboard.createPredefinedCostCenterApprovals()">Setup Predefined Approvals</button><span ng-show="dashboard.creatingCostCenterApprovals">{{dashboard.creatingCostCenterApprovals}}</span></p>
+    <p><button class="am-btn am-primary" ng-click="dashboard.deleteAllApprovals()">Delete Predefined Approvals</button></p><span ng-show="dashboard.deletingApprovals">{{dashboard.deletingApprovals}}</span></p>
+    <hr/>
+    <h4>Category Roots</h4>
+    <p><button class="am-btn am-primary" ng-click="dashboard.createCategoryRoots()">1) Create category roots</button></p>
+    <p><button class="am-btn am-primary" ng-click="dashboard.deleteCategoryRoots()">2) Delete category roots</button></p>
+    <hr/>
+    <h4>Product Markdown Specs</h4>
+    <p><button class="am-btn am-primary" ng-click="dashboard.createMarkdownSpecs()">Create Markdown Specs</button></p>
+    <p><button class="am-btn am-primary" ng-click="dashboard.assignMarkdownSpecs()">Assign Markdown Specs</button></p>
+    <hr />
+    <h4>Promotion XP Cleanup</h4>
+    <p><button class="am-btn am-primary" ng-click="dashboard.cleanupPromoXP()">Cleanup Promotion XP</button> <span ng-show="dashboard.promoCleanupComplete">Complete</span></p>
+
+    <!--<h4>Submit an Order</h4>
+    <form name="submitOrder" am-layout="horizontal" ng-submit="dashboard.submitOrder()">
+        <fieldset am-layout="stack">
+            <label>Order ID</label>
+            <input type="text" name="OrderID" ng-model="dashboard.submitOrderID" ng-required="true"/>
+            <button type="submit" ng-disabled="submitOrder.$invalid || dashboard.submitting" class="am-btn am-primary">{{submitting ? 'Submitting...' : 'Submit'}}</button>
+        </fieldset>
+    </form>
+    <form name="deleteOrder" am-layout="horizontal" ng-submit="dashboard.deleteOrder()">
+        <fieldset am-layout="stack">
+            <label>Order ID</label>
+            <input type="text" name="OrderID" ng-model="dashboard.deleteOrderID" ng-required="true"/>
+            <button type="submit" ng-disabled="deleteOrder.$invalid || dashboard.submitting" class="am-btn am-primary">{{submitting ? 'Submitting...' : 'Submit'}}</button>
+        </fieldset>
+    </form>
+    <button type="button" ng-click="dashboard.getSalonsByRegionID()">Get Salons By Region ID</button>
+    <button type="button" ng-click="dashboard.deleteClaims()">Delete Claims</button>
+    <section am-padding>
+        <ul>
+            <li ng-repeat="product in dashboard.ProductList">{{product}}</li>
+        </ul>
+    </section>-->
+</section>

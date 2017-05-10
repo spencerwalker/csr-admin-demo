@@ -1,0 +1,55 @@
+<header class="aveda-blue-header">
+	<h3>Urgent Updates</h3>
+</header>
+<div am-padding-l="large">
+	<form am-padding-l="bottom" am-padding-p="small" name="createNewUpdate" ng-submit="adminUpdatesList.createNewUpdate()">
+		<fieldset am-layout="stack">
+			<div role="group toolbar">
+				<label class="visuallyhidden">Update Message</label>
+				<input type="text" placeholder="New Urgent Update message..." ng-required="true" ng-model="adminUpdatesList.newUpdateBody"/>
+				<button type="submit" class="am-btn am-primary" ng-disabled="createNewUpdate.$invalid"><i class="fa fa-plus-circle"></i> Create Update</button>
+			</div>
+		</fieldset>
+	</form>
+	<section class="news-summary" ng-repeat="item in adminUpdatesList.updates | orderObjectBy:'Timestamp':true">
+		<header class="aveda-detail-header" am-padding>
+			<form ng-if="item.Editing" name="editUpdate" ng-submit="adminUpdatesList.updateItem(item)">
+				<fieldset am-layout="stack">
+					<div role="group toolbar">
+						<label class="visuallyhidden">Update Message</label>
+						<input type="text" ng-model="item.NewBody" ng-required="true"/>
+						<button type="submit" class="am-btn am-primary" ng-disabled="editUpdate.$invalid">Save</button>
+						<button type="button" class="am-btn am-secondary" ng-click="item.Editing = false">Cancel</button>
+					</div>
+				</fieldset>
+			</form>
+			<span>
+				<h4 ng-show="!item.Editing">{{item.Body}}</h4>
+				<p ng-show="!item.Editing">{{item.Timestamp | date:'shortDate'}}</p>
+			</span>
+			<span>
+				<button ng-show="!item.Editing" type="button" class="am-btn am-secondary" ng-click="adminUpdatesList.deleteUpdate(this.item.id)">Delete</button>
+				<button ng-show="!item.Editing" type="button" class="am-btn am-secondary" ng-click="adminUpdatesList.editItem(this)">Edit</button>
+			</span>
+		</header>
+
+		<div class="assignment-summary" am-padding>
+			<button ng-show="!item.Editing" type="button" class="am-btn am-secondary" ng-click="adminUpdatesList.editAssignments(item.id)">Edit</button>
+			<i class="fa fa-eye"></i>
+			<span ng-if="item.Assignments.AllUsers">All Users </span>
+			<span ng-if="!item.Assignments.AllUsers && (item.Assignments.Internal && item.Assignments.External)">All Internal and External users</span>
+			<span ng-if="!item.Assignments.AllUsers && (item.Assignments.Internal && !item.Assignments.External)">All Internal users</span>
+			<span ng-if="!item.Assignments.AllUsers && (!item.Assignments.Internal && item.Assignments.External)">All External users</span>
+			<span ng-if="item.Assignments.Regions"> in
+				<span ng-repeat="region in item.Assignments.Regions"> <span class="aveda-pill small light-blue">{{region.Name}}</span>{{($last ? '' : ',')}}</span>
+			</span>
+			<span ng-if="item.Assignments.SalonTypes"> in a
+				<span ng-repeat="type in item.Assignments.SalonTypes"><span class="aveda-pill small green">{{type.Type}}</span>{{($last ? '' : ', ')}}</span>
+			</span>
+			<span ng-if="item.Assignments.Plants"> using plants
+				<span ng-repeat="plant in item.Assignments.Plants"><span class="aveda-pill small orange">{{plant.Plant}}</span>{{$last ? '': ', '}}</span>
+			</span>
+				<span>will see this update.</span>
+		</div>
+	</section>
+</div>

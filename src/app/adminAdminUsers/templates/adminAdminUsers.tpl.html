@@ -1,0 +1,36 @@
+<article am-layout="horizontal">
+    <header class="aveda-blue-header">
+        <h3>Admin Users</h3>
+    </header>
+</article>
+<section am-padding-l="large">
+    <form am-layout="horizontal" am-margin-l="bottom" am-padding-p="small" name="filterUsers">
+        <fieldset am-layout="stack">
+            <div role="group toolbar">
+                <button type="button" am-padding class="am-btn am-primary" ui-sref="base.adminAdminUsers.create">Create New <i class="fa fa-plus-circle"></i></button>
+                <input type="text" placeholder="Filter users..." ng-model="adminAdminUsers.filterModel"/>
+            </div>
+        </fieldset>
+    </form>
+    <table am-layout="aveda-table">
+        <thead ng-show="adminAdminUsers.userList.length">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in adminAdminUsers.userList  | filter:adminAdminUsers.filterModel" ng-if="user.Username != 'AvedaAPIUser'">
+            <td><a ui-sref="base.adminAdminUsers.edit({id: user.ID})" ui-sref-opts="{reload: true}">{{user.FirstName + ' ' + user.LastName}}</a></td>
+            <td>{{user.Username}}</td>
+            <td>{{user.Email}}</td>
+        </tr>
+        <tr ng-if="!adminAdminUsers.userList.length">
+            <td class="am-text-c">
+                No admin users have been created yet.
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>

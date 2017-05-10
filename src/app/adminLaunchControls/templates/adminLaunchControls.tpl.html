@@ -1,0 +1,31 @@
+<header class="aveda-blue-header">
+    <h3>Launch Controls</h3>
+</header>
+<article>
+    <section am-padding-l="large" am-padding-p="small">
+        <h4>SDP Launch Period</h4>
+        <form name="SDPLaunch">
+            <fieldset am-layout="inline">
+                <button class="am-btn" ng-click="adminLaunchControls.openDatepicker($event, 'SDPstart')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="Start" datepicker-popup="shortDate" is-open="adminLaunchControls.SDPstart" ng-model="adminLaunchControls.buyer.xp.SDPLaunchStart" />
+                <button class="am-btn" ng-click="adminLaunchControls.openDatepicker($event, 'SDPend')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="End" datepicker-popup="shortDate" is-open="adminLaunchControls.SDPend" ng-model="adminLaunchControls.buyer.xp.SDPLaunchEnd" />
+                <button class="am-btn" ng-click="adminLaunchControls.saveSDPLaunchDates()">Save</button>
+            </fieldset>
+        </form>
+    </section>
+</article>
+<article>
+    <section am-padding-l="large" am-padding-p="small">
+        <h4>Launch Orders Bulk Approval</h4>
+        <form name="LaunchApprovals">
+            <fieldset am-layout="inline">
+                <button class="am-btn" ng-click="adminLaunchControls.openDatepicker($event, 'bulkApproveStart')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="Start" datepicker-popup="shortDate" is-open="adminLaunchControls.bulkApproveStart" ng-model="adminLaunchControls.launchApprovalsStart" />
+                <button class="am-btn" ng-click="adminLaunchControls.openDatepicker($event, 'bulkApproveEnd')"><i class="fa fa-calendar"></i></button>
+                <input type="text" placeholder="End" datepicker-popup="shortDate" is-open="adminLaunchControls.bulkApproveEnd" ng-model="adminLaunchControls.launchApprovalsEnd" />
+                <button class="am-btn" ng-click="adminLaunchControls.processApprovals()">Process Approvals</button>
+            </fieldset>
+        </form>
+    </section>
+</article>

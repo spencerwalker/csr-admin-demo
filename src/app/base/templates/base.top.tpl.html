@@ -1,0 +1,36 @@
+<nav am-layout="horizontal aveda-global-nav" am-layer="z4">
+	<button type="button" ng-if="application.$ocMedia('orientation:portrait')" ng-click="base.toggleDrawer('left')">
+		<i class="fa fa-bars green-text"></i>
+	</button>
+	<button id="#Search" type="button" ng-if="application.$ocMedia('orientation:portrait')" ng-click="base.toggleSearch()">
+		<i class="fa fa-search green-text"></i>
+	</button>
+	<form name="search" class="aveda-search" ng-show="application.$ocMedia('orientation:landscape') || base.showMobileSearch">
+		<fieldset am-layout>
+			<div role="group toolbar">
+				<div role="dropdown" dropdown>
+					<button class="am-btn" dropdown-toggle>{{base.searchType}}<i class="fa fa-caret-up"></i></button>
+					<ul dropdown-menu>
+						<li ng-repeat="type in base.searchTypes" ng-click="base.setSearchType(type)">{{type}}</li>
+					</ul>
+				</div>
+				<label class="visuallyhidden">Search</label>
+				<input type="search" placeholder="Search..." ng-model="searchTerm" autofocus/>
+				<i class="fa fa-search"></i>
+				<button type="submit" class="visuallyhidden"></button>
+			</div>
+		</fieldset>
+	</form>
+	<div id="Account" role="dropdown" dropdown on-toggle="base.onDropdownToggle()">
+		<button type="button" dropdown-toggle>
+			<i class="fa fa-caret-up"></i>
+			<i class="fa fa-user green-text"></i>
+			<span ng-show="application.$ocMedia('orientation:landscape')">Hi, {{base.currentUser.FirstName + ' ' + base.currentUser.LastName}}</span>
+		</button>
+		<nav dropdown-menu>
+			<a><i class="fa fa-cog"></i> My Profile</a>
+			<hr/>
+			<a ng-click="base.logout()"><i class="fa fa-sign-out"></i>Log Out</a>
+		</nav>
+	</div>
+</nav>

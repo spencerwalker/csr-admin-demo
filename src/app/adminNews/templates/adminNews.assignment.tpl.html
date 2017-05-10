@@ -1,0 +1,44 @@
+<form name="newsAssignmentForm" am-layout="vertical" ng-submit="newsAssignment.save()">
+    <header class="aveda-blue-header">
+        <h3>News Article Assignment</h3>
+        <i class="fa fa-3x green-text fa-times" ng-click="newsAssignment.close()"></i>
+    </header>
+    <fieldset am-layout>
+        <div role="group" am-padding>
+            <label>
+                <input type="checkbox" ng-model="newsAssignment.article.Assignments.AllUsers" ng-change="newsAssignment.allUsersToggle(newsAssignment.article.Assignments.AllUsers)" />
+                All Users
+            </label>
+            <label>
+                <input type="checkbox" ng-model="newsAssignment.article.Assignments.Internal" ng-change="newsAssignment.internalUsersToggle(newsAssignment.article.Assignments.Internal)" ng-disabled="newsAssignment.article.Assignments.AllUsers" />
+                Internal Only
+            </label>
+            <!--<label>
+                <input type="checkbox" ng-model="newsAssignment.article.Assignments.External" ng-disabled="newsAssignment.article.Assignments.AllUsers" />
+                External Users
+            </label>-->
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Regions (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="region in newsAssignment.regions">
+                <input type="checkbox" ng-model="region.Selected" ng-disabled="newsAssignment.article.Assignments.AllUsers || newsAssignment.article.Assignments.Internal" />
+                {{region.Name}}
+            </label>
+        </div>
+    </fieldset>
+    <fieldset am-layout>
+        <legend>Salon Types (leave blank if all)</legend>
+        <div role="group" am-padding>
+            <label ng-repeat="type in newsAssignment.salonTypes">
+                <input type="checkbox" ng-model="type.Selected" ng-disabled="newsAssignment.article.Assignments.AllUsers || newsAssignment.article.Assignments.Internal" />
+                {{type.Type}}
+            </label>
+        </div>
+    </fieldset>
+    <hr/>
+    <div am-padding>
+        <button type="submit" class="am-btn am-primary">Save</button>
+    </div>
+</form>

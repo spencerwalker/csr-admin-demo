@@ -256,13 +256,16 @@ ul.typeahead-menu {
   li:not(:last-of-type) {
     //border-bottom:1px solid @aveda-gray;
   }
+  li:hover {
+    background-color: lighten(@aveda-lime,25%);
+  }
   @media(orientation:portrait) {
     left:0 !important;
   }
 }
 
 header.aveda-blue-header {
-  background: linear-gradient(135deg, @aveda-dark-blue 0%,@aveda-blue 100%); /* W3C */
+  background: #888; /* W3C */
   padding:@am-root-padding @am-root-padding 0;
   display:flex;
   flex-flow:row nowrap;
@@ -295,7 +298,7 @@ header.aveda-blue-header {
     border:none;
     border-radius:10px 10px 0 0;
     i {
-      color:@aveda-green;
+      color:@aveda-gray-blue;
     }
     &:hover {
       border:none;
@@ -715,4 +718,13 @@ text-angular.ta-root {
     border-width: 0 0 0 4px;
     padding: 15px;
     margin-bottom: 20px;
+}
+
+//logo revisions
+.login-app-logo {
+  max-width: 30%;
+}
+
+.app-logo {
+  padding: 2em 1em 1em;
 }

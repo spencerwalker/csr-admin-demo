@@ -143,7 +143,7 @@ function AppCtrl($q, $rootScope, environment, appname, $state, $ocMedia) {
 
 function Routing($urlRouterProvider, $urlMatcherFactoryProvider) {
 	$urlMatcherFactoryProvider.strictMode(false);
-	$urlRouterProvider.otherwise('/dashboard');
+	$urlRouterProvider.otherwise('/adminProducts');
 	//$locationProvider.html5Mode(true);
 	//For HTML5 mode to work we need to always return index.html as the entry point on the serverside
 }

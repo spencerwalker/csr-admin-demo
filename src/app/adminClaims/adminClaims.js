@@ -461,7 +461,7 @@ function AdminClaimsController($stateParams, AdminClaimsService, CategoryOptions
         AdminClaimsService.ListClaimReasons()
             .then(function(data) {
                 vm.newClaimReason = null;
-                vm.claimReasons = data.Data.ClaimReasons;
+                vm.claimReasons = data;
             });
     }
 
